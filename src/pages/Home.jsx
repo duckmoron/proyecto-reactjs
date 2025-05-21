@@ -4,10 +4,10 @@ import Footer from '../components/estaticos/Footer'
 import ProductList from '../components/ProductList'
 import loading from '../assets/loading.gif'
 
-const Home = ({ productos, cargando }) => {
+const Home = ({ cart, productos, cargando }) => {
   return (
     <>
-    <Header />
+    <Header cartItems={cart} />
     <main>
         <h1>Bienvenidos a mi Tienda</h1>
         <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Atque sequi, illum maiores qui amet sint ratione possimus. Et porro recusandae odio error, ab mollitia cumque dolor maxime minima necessitatibus quod?</p>

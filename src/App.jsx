@@ -23,7 +23,7 @@ function App() {
       },2000)
     })
     .catch(error => {
-      console.log('Error',error)
+      console.log('Error', error)
       setCargando(false)
       setError(true)
     })
@@ -35,13 +35,13 @@ function App() {
     <>
       <Router>
         <Routes>
-          <Route path='/' element={<Home productos={productos} cargando={cargando}/>} />
+          <Route path='/' element={<Home cart={cart} productos={productos} cargando={cargando} />} />
 
-          <Route path='/acercade' element={<AcercaDe/>} />
+          <Route path='/acercade' element={<AcercaDe cart={cart} />} />
 
-          <Route path='/productos' element={<GaleriaDeProductos/>} />
+          <Route path='/productos' element={<GaleriaDeProductos cart={cart} productos={productos} cargando={cargando} />} />
 
-          <Route path='/contacto' element={<Contacto/>} />
+          <Route path='/contacto' element={<Contacto cart={cart} />} />
 
           <Route path='*' element={<NotFound/>} />
         </Routes>
