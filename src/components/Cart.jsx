@@ -1,7 +1,7 @@
 import React from "react";
 import './styleCart.css'
 
-const Cart = ({ cartItems, isOpen, onClose }) => {
+const Cart = ({ cartItems, isOpen, onClose, borrarProducto }) => {
     return (
         <div className={`cart-drawer ${isOpen ? 'open' : ''}`}>
             <div className="cart-header">
@@ -14,14 +14,12 @@ const Cart = ({ cartItems, isOpen, onClose }) => {
                     : (
                         <ul className="cart-item">
                             {cartItems.map((item, index) => (
-                                <>
-                                    <li key={index} style={{ color: "black" }}>
-                                        {item.nombre} - {item.precio}
-                                        <button>
-                                            <i className="fa-solid fa-trash"></i>
-                                        </button>
-                                    </li>
-                                </>
+                                <li key={item.id} style={{ color: "black" }}>
+                                    {item.nombre} - {item.precio}
+                                    <button onClick={() => borrarProducto(item)}>
+                                        <i className="fa-solid fa-trash"></i>
+                                    </button>
+                                </li>
                             ))}
                         </ul>
                     )}
