@@ -1,5 +1,6 @@
 import React, {useState} from "react";
 import './styleProductos.css'
+import { Link } from "react-router-dom";
 
 const Productos = ({producto, agregarCarrito}) => {
 
@@ -25,6 +26,8 @@ const Productos = ({producto, agregarCarrito}) => {
             </div>
 
             <button onClick={()=> agregarCarrito(producto)}>Agregar al carrito</button>
+
+            <Link to={`/productos/${producto.id}`}> Ver más </Link>
 
         </section>
     );

@@ -6,12 +6,18 @@ import AcercaDe from './pages/AcercaDe'
 import GaleriaDeProductos from './pages/GaleriaDeProductos'
 import Contacto from './pages/Contacto'
 import NotFound from './pages/NotFound'
+import DetallesProductos from './components/DetallesProductos'
+import Admin from './pages/Admin'
+import Login from './pages/Login'
+import RutaProtegida from './auth/RutaProtegida'
 
 function App() {
   const [cart, setCart] = useState([])
   const [productos, setProductos] = useState([])
   const [cargando, setCargando] = useState(true)
   const [error, setError] = useState(false)
+
+  const [isAuthenticated, setIsAuth] = useState(false)
 
   useEffect(()=>{
     fetch('/data/data.json')
@@ -29,6 +35,10 @@ function App() {
     })
 
   },[])
+
+  if (error) {
+    return <p>Ocurrió un error al cargar los productos. Por favor intenta nuevamente.</p>;
+  }
   
   const handleAddToCart = (product) => {
     const productInCart = cart.find((item) => item.id === product.id);
@@ -66,7 +76,12 @@ function App() {
 
           <Route path='/productos' element={<GaleriaDeProductos borrarProducto={handleDeleteFromCart} agregarCarrito={handleAddToCart} cart={cart} productos={productos} cargando={cargando} />} />
 
+          <Route path='/productos/:id/' element={<DetallesProductos productos={productos}/>}/>
+
           <Route path='/contacto' element={<Contacto borrarProducto={handleDeleteFromCart} cart={cart} />} />
+
+          <Route path='/admin' element={<RutaProtegida isAuthenticated={isAuthenticated}> <Admin /> </RutaProtegida>} />
+          <Route path='/login' element={<Login />} />
 
           <Route path='*' element={<NotFound/>} />
         </Routes>
