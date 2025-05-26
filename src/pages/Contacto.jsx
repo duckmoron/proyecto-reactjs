@@ -6,7 +6,9 @@ const Contactos = ({cart,borrarProducto}) => {
   return (
     <>
     <Header borrarProducto={borrarProducto} cartItems={cart} />
+    <main>
         <h1>Contacto</h1>
+    </main>
     <Footer />
     </>
   )

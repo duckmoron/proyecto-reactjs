@@ -6,7 +6,9 @@ const AcercaDe = ({cart,borrarProducto}) => {
   return (
     <>
     <Header borrarProducto={borrarProducto} cartItems={cart} />
+    <main>
         <h1>AcercaDe</h1>
+    </main>
     <Footer />
     </>
   )

@@ -7,18 +7,19 @@ import loading from '../assets/loading.gif'
 const Home = ({ cart, productos, cargando, agregarCarrito, borrarProducto }) => {
   return (
     <>
-    <Header borrarProducto={borrarProducto} cartItems={cart} />
-    <main>
-        <h1>Bienvenidos a mi Tienda</h1>
-        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Atque sequi, illum maiores qui amet sint ratione possimus. Et porro recusandae odio error, ab mollitia cumque dolor maxime minima necessitatibus quod?</p>
-      {
-        cargando ? <img src={loading} alt='loading' /> :
-        <ProductList agregarCarrito={agregarCarrito} productos={productos}/>
-      }
-
+    <div className="container">
+      <Header borrarProducto={borrarProducto} cartItems={cart} />
+      <main>
         
-    </main>
-
+          <h1>Bienvenidos a mi Tienda</h1>
+          <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Atque sequi, illum maiores qui amet sint ratione possimus. Et porro recusandae odio error, ab mollitia cumque dolor maxime minima necessitatibus quod?</p>
+        {
+          cargando ? <img src={loading} alt='loading' /> :
+          <ProductList agregarCarrito={agregarCarrito} productos={productos}/>
+        }
+          
+      </main>
+    </div>
     <Footer />
     </>
   )
