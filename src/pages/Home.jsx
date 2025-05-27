@@ -14,8 +14,14 @@ const Home = ({ cart, productos, cargando, agregarCarrito, borrarProducto }) => 
           <h1>Bienvenidos a mi Tienda</h1>
           <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Atque sequi, illum maiores qui amet sint ratione possimus. Et porro recusandae odio error, ab mollitia cumque dolor maxime minima necessitatibus quod?</p>
         {
-          cargando ? <img src={loading} alt='loading' /> :
-          <ProductList agregarCarrito={agregarCarrito} productos={productos}/>
+          cargando ? (
+            <img src={loading} alt='loading' />
+          ) : (
+            <>
+              <h2>Galeria de productos</h2>
+              <ProductList agregarCarrito={agregarCarrito} productos={productos} />
+            </>
+          )
         }
           
       </main>

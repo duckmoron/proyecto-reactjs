@@ -9,20 +9,20 @@ const Cart = ({ cartItems, isOpen, onClose, borrarProducto }) => {
                 <button onClick={onClose} className="close-button">X</button>
             </div>
             <div className="cart-content">
-                {cartItems.length === 0
-                    ? <p style={{ color: "red" }}>El carrito esta vacío</p>
-                    : (
-                        <ul className="cart-item">
-                            {cartItems.map((item, index) => (
-                                <li key={item.id} style={{ color: "black" }}>
-                                    {item.nombre} - {item.precio}
-                                    <button onClick={() => borrarProducto(item)}>
-                                        <i className="fa-solid fa-trash"></i>
-                                    </button>
-                                </li>
-                            ))}
-                        </ul>
-                    )}
+                {cartItems.length === 0 ? (
+                    <p style={{ color: "red" }}>El carrito está vacío</p>
+                ) : (
+                    <div className="cart-item">
+                    {cartItems.map((item) => (
+                        <div key={item.id} className="cart-item-row">
+                        <span>{item.nombre} - {item.precio}</span>
+                        <button onClick={() => borrarProducto(item)}>
+                            <i className="fa-solid fa-trash"></i>
+                        </button>
+                        </div>
+                    ))}
+                    </div>
+                )}
             </div>
         </div>
     );

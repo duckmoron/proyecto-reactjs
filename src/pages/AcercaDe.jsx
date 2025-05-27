@@ -7,7 +7,7 @@ const AcercaDe = ({cart,borrarProducto}) => {
     <>
     <Header borrarProducto={borrarProducto} cartItems={cart} />
     <main>
-        <h1>AcercaDe</h1>
+        <h1>Acerca de</h1>
     </main>
     <Footer />
     </>

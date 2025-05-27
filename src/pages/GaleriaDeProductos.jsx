@@ -9,7 +9,7 @@ const GaleriaDeProductos = ({ cart, productos, cargando, agregarCarrito,borrarPr
     <>
       <Header borrarProducto={borrarProducto} cartItems={cart} />
       <main>
-        <h1>GaleriaDeProductos</h1>
+        <h1>Galeria de productos</h1>
         {cargando
           ? <img src={loading} alt="loading" />
           : <ProductList agregarCarrito={agregarCarrito} productos={productos} />}
