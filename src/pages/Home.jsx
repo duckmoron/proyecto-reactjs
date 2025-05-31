@@ -1,14 +1,19 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import Header from '../components/estaticos/Header'
 import Footer from '../components/estaticos/Footer'
 import ProductList from '../components/ProductList'
 import loading from '../assets/loading.gif'
 
-const Home = ({ cart, productos, cargando, agregarCarrito, borrarProducto }) => {
+import { CartContext } from '../context/CartContext'
+
+const Home = () => {
+  
+  const {cart,productos,cargando,error,handleAddToCart,handleDeleteFromCart,isAuthenticated} = useContext(CartContext)
+  
   return (
     <>
     <div className="container">
-      <Header borrarProducto={borrarProducto} cartItems={cart} />
+      <Header />
       <main>
         
           <h1>Bienvenidos a mi Tienda</h1>
@@ -19,7 +24,7 @@ const Home = ({ cart, productos, cargando, agregarCarrito, borrarProducto }) => 
           ) : (
             <>
               <h2>Galeria de productos</h2>
-              <ProductList agregarCarrito={agregarCarrito} productos={productos} />
+              <ProductList agregarCarrito={handleAddToCart} productos={productos} />
             </>
           )
         }
