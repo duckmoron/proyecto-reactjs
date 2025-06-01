@@ -1,64 +1,73 @@
-import { createContext, useState, useEffect } from "react";
+import { createContext, useEffect, useState } from "react";
 
-export const CartContext = createContext()
+export const CartContext = createContext();
 
 export const CartProvider = ({ children }) => {
+    const [cart, setCart] = useState([]);
+    const [productos, setProductos] = useState([]);
+    const [cargando, setCargando] = useState(true);
+    const [error, setError] = useState(false);
 
-    const [cart, setCart] = useState([])
-    const [productos, setProductos] = useState([])
-    const [cargando, setCargando] = useState(true)
-    const [error, setError] = useState(false)
+    const [isAuthenticated, setIsAuth] = useState(false);
 
-    const [isAuthenticated, setIsAuth] = useState(false)
-
-    useEffect(()=>{
-        fetch('/data/data.json')
-        .then(respuesta => respuesta.json())
-        .then(datos =>{
-        setTimeout(()=>{
-            setProductos(datos)
-            setCargando(false)
-        },2000)
-        })
-        .catch(error => {
-        console.log('Error', error)
-        setCargando(false)
-        setError(true)
-        })
-
-    },[])
+    useEffect(() => {
+        fetch("/data/data.json")
+            .then((respuesta) => respuesta.json())
+            .then((datos) => {
+                setTimeout(() => {
+                    setProductos(datos);
+                    setCargando(false);
+                }, 2000);
+            })
+            .catch((error) => {
+                console.log("Error", error);
+                setCargando(false);
+                setError(true);
+            });
+    }, []);
 
     if (error) {
-        return <p>Ocurrió un error al cargar los productos. Por favor intenta nuevamente.</p>;
+        return (
+            <p>
+                Ocurrió un error al cargar los productos. Por favor intenta
+                nuevamente.
+            </p>
+        );
     }
-    
+
     const handleAddToCart = (product) => {
         const productInCart = cart.find((item) => item.id === product.id);
-        if(productInCart){
-        setCart(cart.map((item) => item.id === product.id ? {...item, quantity:item.quantity+1} : item));
-        }else{
-        setCart([...cart, {...product,quantity:1}]);
+        if (productInCart) {
+            setCart(
+                cart.map((item) =>
+                    item.id === product.id
+                        ? { ...item, cantidad: product.cantidad }
+                        : item
+                ),
+            );
+        } else {
+            setCart([...cart, { ...product, cantidad: product.cantidad }]);
         }
     };
 
     const handleDeleteFromCart = (product) => {
-        setCart(prevCart => {
-        return prevCart.map(item => {
-            if (item.id === product.id) {
-            if (item.quantity > 1) {
-                return {...item, quantity: item.quantity -1};
-            }else{
-                return null; // Si quantity es 1, marcamos para eliminar
-            }
-            }else{
-            return item; // Si no es el producto, lo dejamos igual
-            }
-        }).filter(item => item !== null); // Quitamos los productos nulos
+        setCart((prevCart) => {
+            return prevCart.map((item) => {
+                if (item.id === product.id) {
+                    if (item.cantidad > 1) {
+                        return { ...item, cantidad: item.cantidad - 1 };
+                    } else {
+                        return null; // Si quantity es 1, marcamos para eliminar
+                    }
+                } else {
+                    return item; // Si no es el producto, lo dejamos igual
+                }
+            }).filter((item) => item !== null); // Quitamos los productos nulos
         });
     };
 
-	return(
-		<CartContext.Provider
+    return (
+        <CartContext.Provider
             value={{
                 cart,
                 productos,
@@ -66,10 +75,11 @@ export const CartProvider = ({ children }) => {
                 error,
                 handleAddToCart,
                 handleDeleteFromCart,
-                isAuthenticated
+                isAuthenticated,
+                setIsAuth,
             }}
         >
             {children}
         </CartContext.Provider>
-	)
-}
+    );
+};

@@ -8,7 +8,7 @@ import { CartContext } from '../context/CartContext'
 
 const Home = () => {
   
-  const {cart,productos,cargando,error,handleAddToCart,handleDeleteFromCart,isAuthenticated} = useContext(CartContext)
+  const { cargando } = useContext(CartContext)
   
   return (
     <>
@@ -24,7 +24,7 @@ const Home = () => {
           ) : (
             <>
               <h2>Galeria de productos</h2>
-              <ProductList agregarCarrito={handleAddToCart} productos={productos} />
+              <ProductList />
             </>
           )
         }
