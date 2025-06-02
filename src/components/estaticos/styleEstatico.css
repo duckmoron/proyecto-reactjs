@@ -22,6 +22,33 @@ ul {
     margin: 0;
 }
 
+.navHeader {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: 30px 20px;
+}
+
+.navLinks,
+.navIcons {
+    display: flex;
+    gap: 35px;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+
+.btnCart {
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+
+.navIcons i {
+    font-size: 1.2rem;
+}
+
 .link {
     color: white;
     text-decoration: none;

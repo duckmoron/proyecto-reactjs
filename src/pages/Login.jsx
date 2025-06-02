@@ -1,6 +1,29 @@
-import React from 'react'
+import React, { useState, useContext } from "react";
+import { CartContext } from '../context/CartContext'
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
+
+  const { setIsAuth } = useContext( CartContext )
+
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+  const [error, setError] = useState({})
+  const navigate = useNavigate()
+
+  const handleSubmit = (e) => {
+    e.preventDefault()
+    let validationError = {}
+    if(!email) validationError.email = 'El email es requerido'
+    if(!password) validationError.password = 'La contraseña es requerido'
+
+    if(Object.keys(validationError).length > 0){
+      setError(validationError)
+    }
+    return
+  }
+
+
   return (
     <div>
       <div class="login-container">
