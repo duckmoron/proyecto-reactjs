@@ -3,7 +3,8 @@ import "./styleCart.css";
 
 import { CartContext } from "../context/CartContext";
 
-const Cart = ({ isOpen, onClose }) => {
+const Cart = ({ cartItems, isOpen, onClose, borrarProducto }) => {
+    
     const { cart, handleDeleteFromCart } = useContext(CartContext);
 
     return (
@@ -23,6 +24,7 @@ const Cart = ({ isOpen, onClose }) => {
                                         {item.nombre} - {item.precio} -{" "}
                                         {item.cantidad}
                                     </span>
+                                
                                     <button
                                         onClick={() =>
                                             handleDeleteFromCart(item)}

@@ -15,7 +15,7 @@ import { CartContext } from './context/CartContext'
 
 function App() {
 
-  const {cart,productos,cargando,error,handleAddToCart,handleDeleteFromCart,isAuthenticated} = useContext(CartContext)
+  const {isAuthenticated} = useContext(CartContext)
 
   return (
     <>
