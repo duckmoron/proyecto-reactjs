@@ -1,25 +1,23 @@
 import { useContext } from 'react'
 import './App.css'
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
+import { Routes, Route } from 'react-router-dom'
 import Home from './pages/Home'
 import AcercaDe from './pages/AcercaDe'
 import GaleriaDeProductos from './pages/GaleriaDeProductos'
 import Contacto from './pages/Contacto'
 import NotFound from './pages/NotFound'
-import DetallesProductos from './components/DetallesProductos'
 import Admin from './pages/Admin'
+import DetallesProductos from './components/DetallesProductos'
 import Login from './pages/Login'
 import RutaProtegida from './auth/RutaProtegida'
-
 import { CartContext } from './context/CartContext'
 
 function App() {
 
-  const {isAuthenticated} = useContext(CartContext)
+  const { cart, productos, cargando, error, handleAddToCart, handleDeleteFromCart, isAuthenticated } = useContext(CartContext)
 
   return (
     <>
-      <Router>
         <Routes>
           <Route path='/' element={<Home  />} />
 
@@ -36,7 +34,6 @@ function App() {
 
           <Route path='*' element={<NotFound/>} />
         </Routes>
-      </Router>
     </>
   )
 }
