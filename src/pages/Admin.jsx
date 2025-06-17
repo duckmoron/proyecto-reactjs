@@ -1,14 +1,21 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import FormularioProducto from "../components/FormularioProducto";
+import FormularioEdicion from "../components/FormularioEdicion";
+import { CartContext } from "../context/CartContext";
+import { useNavigate } from "react-router-dom";
 
 const Admin = () => {
+    const {setIsAuth} = useContext(CartContext)
     const [productos, setProductos] = useState([]);
-    const [form, setForm] = useState({ id: null, name: "", price: "" });
     const [loading, setLoading] = useState(true);
     const [open, setOpen] = useState(false)
+    const [seleccionado, setSeleccionado] = useState(null)
+    const [openEditor, setOpenEditor] = useState(false)
+    const apiUrl = 'https://6850bd40e7c42cfd17997288.mockapi.io/product'
+    const navigate = useNavigate()
 
     useEffect(() => {
-        fetch("/data/data.json")
+        fetch(apiUrl)
             .then((response) => response.json())
             .then((data) => {
                 setTimeout(() => {
@@ -23,9 +30,20 @@ const Admin = () => {
             });
     }, []);
 
+    const cargarProductos = async()=>{
+        try {
+            const res = await fetch(apiUrl)
+            const data = await res.json()
+            setProductos(data)
+        } catch (error) {
+            console.log('Error al cargar productos ', error);
+            
+        }
+    }
+
     const agregarProducto = async (producto) =>{
         try{
-            const respuesta = await fetch('https://682e2f0e746f8ca4a47c2dbd.mockapi.io/product',{
+            const respuesta = await fetch(apiUrl,{
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -37,11 +55,52 @@ const Admin = () => {
         }
         const data = await respuesta.json()
         alert('Producto agregado correctamente')
+        cargarProductos()
+        setOpen(false)
         }catch(error){
             console.log(error.message);
             
         }
     }
+
+    const actulizarProducto = async(producto) =>{
+        try {
+            const respuesta = await fetch(`${apiUrl}/${producto.id}`,
+                {method:'PUT',
+                    headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(producto)
+                })
+                if(!respuesta.ok) throw Error ('Error al actualizar el producto')
+                    const data = await respuesta.json()
+                alert('Producto actualizado correctamente')
+                setOpenEditor(false)
+                setSeleccionado(null)
+                cargarProductos()
+        } catch (error) {
+            console.log(error.message);
+            
+        }
+    }
+
+    const eliminarProducto = async (id)=>{
+        const confirmar = window.confirm('Estas seguro de eliminar el producto?')
+        if (confirmar) {
+            try{
+                const respuesta = await fetch(`${apiUrl}/${id}`,{
+                    method:'DELETE',
+                })
+                if(!respuesta.ok) throw Error('Error al eliminar')
+                alert('Producto Eliminado correctamente')
+                cargarProductos()
+            }catch(error){
+                alert('Hubo un problema al eliminar el producto')
+            }
+        }
+    }
+
+
 
     return (
         <div className="container">
@@ -52,7 +111,11 @@ const Admin = () => {
                     <nav>
                         <ul className="nav">
                             <li className="navItem">
-                                <button className="navButton">
+                                <button className="navButton" onClick={() => {
+                                    setIsAuth(false);
+                                    navigate('/');
+                                    localStorage.removeItem('isAuth');
+                                }}>
                                     <i className="fa-solid fa-right-from-bracket"></i>
                                 </button>
                             </li>
@@ -74,9 +137,12 @@ const Admin = () => {
                                 <span>{product.nombre}</span>
                                 <span>${product.precio}</span>
                                 <div>
-                                    <button className="editButton">Editar</button>
+                                    <button className="editButton" onClick={()=>{
+                                        setOpenEditor(true)
+                                        setSeleccionado(product)
+                                    }}>Editar</button>
 
-                                    <button className="deleteButton">Eliminar</button>
+                                    <button className="deleteButton" onClick={()=> eliminarProducto(product.id)}>Eliminar</button>
                                 </div>
                             </li>
                         ))}
@@ -85,6 +151,7 @@ const Admin = () => {
             )}
             <button onClick={()=> setOpen(true)}>Agregar producto nuevo</button>
             {open && (<FormularioProducto onAgregar={agregarProducto}/>)}
+            {openEditor && (<FormularioEdicion productoSeleccionado={seleccionado} onActualizar={actulizarProducto}/>)}
         </div>
     );
 };

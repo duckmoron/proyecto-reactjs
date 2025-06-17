@@ -4,9 +4,12 @@ function FormularioProducto({ onAgregar }) {
     const [producto, setProducto] = useState({
         nombre: '',
         precio: '',
-        descripcion: '',
+        stock: '',
+        imagen: '',
+        categoria: '',
     });
     const [errores, setErrores] = useState({});
+    
     const handleChange = (e) => {
         const { name, value } = e.target;
         setProducto({ ...producto, [name]: value });
@@ -21,8 +24,8 @@ function FormularioProducto({ onAgregar }) {
         if (!producto.precio || producto.precio <= 0) {
             nuevosErrores.precio = 'El precio debe ser mayor a 0.';
         }
-        if (!producto.descripcion.trim() || producto.descripcion.length < 10) {
-            nuevosErrores.descripcion = 'La descripción debe tener al menos 10 caracteres.';
+        if (!producto.categoria.trim() || producto.categoria.length < 5) {
+            nuevosErrores.categoria = 'La categoria debe tener al menos 5 caracteres.';
         }
         setErrores(nuevosErrores);
         return Object.keys(nuevosErrores).length === 0;
@@ -34,7 +37,13 @@ function FormularioProducto({ onAgregar }) {
             return;
         }
         onAgregar(producto); // Llamada a la función para agregar el producto
-        setProducto({ nombre: '', precio: '', descripcion: '' }); // Limpiar el formulario
+        setProducto({
+            nombre: '',
+            precio: '',
+            stock: '',
+            imagen: '',
+            categoria: '',
+        }); // Limpiar el formulario
     };
 
     return (
@@ -44,25 +53,49 @@ function FormularioProducto({ onAgregar }) {
                 <label>Nombre:</label>
                 <input
                     type="text" name="nombre" value={producto.nombre} onChange={handleChange} required />
-                     {errores.nombre && <p style={{ color: 'red' }}>{errores.nombre}</p>}
+                {errores.nombre && <p style={{ color: 'red' }}>{errores.nombre}</p>}
             </div>
             <div>
                 <label>Precio:</label>
                 <input type="number" name="precio" value={producto.precio} onChange={handleChange} required
                     min="0" />
-                    {errores.precio && <p style={{ color: 'red' }}>{errores.precio}</p>}
+                {errores.precio && <p style={{ color: 'red' }}>{errores.precio}</p>}
             </div>
 
             <div>
-                <label>Descripción:</label>
-                <textarea
-                    name="descripcion"
-                    value={producto.descripcion}
+                <label>Stock:</label>
+                <input
+                    type="number"
+                    name="stock"
+                    value={producto.stock || ''}
                     onChange={handleChange}
                     required
                 />
-                {errores.descripcion && <p style={{ color: 'red' }}>{errores.descripcion}</p>}
+                {errores.stock && <p style={{ color: 'red' }}>{errores.stock}</p>}
             </div>
+            <div>
+                <label>Imagen URL:</label>
+                <input
+                    type="text"
+                    name="imagen"
+                    value={producto.imagen || ''}
+                    onChange={handleChange}
+                    required
+                />
+                {errores.imagen && <p style={{ color: 'red' }}>{errores.imagen}</p>}
+            </div>
+            <div>
+                <label>Categoría:</label>
+                <input
+                    type="text"
+                    name="categoria"
+                    value={producto.categoria || ''}
+                    onChange={handleChange}
+                    required
+                />
+                {errores.categoria && <p style={{ color: 'red' }}>{errores.categoria}</p>}
+            </div>
+
             <button type="submit">Agregar Producto</button>
         </form>
     );

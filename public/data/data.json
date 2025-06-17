@@ -1,50 +1,56 @@
 [
     {
-        "id": 1,
+        "id": "1",
         "nombre": "Dr. Wong",
         "precio": 8.5,
         "stock": 25,
         "imagen": "https://rickandmortyapi.com/api/character/avatar/107.jpeg",
-        "categoria": "Alive - Human"
+        "categoria": "Alive - Human",
+        "cantidad": 30
     },
     {
-        "id": 2,
+        "id": "2",
         "nombre": "Risotto Groupon",
         "precio": 9.0,
         "stock": 18,
         "imagen": "https://rickandmortyapi.com/api/character/avatar/296.jpeg",
-        "categoria": "Dead - Alien"
+        "categoria": "Dead - Alien",
+        "cantidad": 15
     },
     {
-        "id": 3,
+        "id": "3",
         "nombre": "Shlaammi",
         "precio": 10.0,
         "stock": 12,
         "imagen": "https://rickandmortyapi.com/api/character/avatar/312.jpeg",
-        "categoria": "Alive - Alien"
+        "categoria": "Alive - Alien",
+        "cantidad": 4
     },
     {
-        "id": 4,
+        "id": "4",
         "nombre": "Arbolian Mentirososian",
         "precio": 9.5,
         "stock": 15,
         "imagen": "https://rickandmortyapi.com/api/character/avatar/454.jpeg",
-        "categoria": "Alive - Alien"
+        "categoria": "Alive - Alien",
+        "cantidad": 20
     },
     {
-        "id": 5,
+        "id": "5",
         "nombre": "Priest Witherspoon",
         "precio": 8.0,
         "stock": 20,
         "imagen": "https://rickandmortyapi.com/api/character/avatar/538.jpeg",
-        "categoria": "Alive - Human"
+        "categoria": "Alive - Human",
+        "cantidad": 3
     },
     {
-        "id": 6,
+        "id": "6",
         "nombre": "High Pilot",
         "precio": 6.0,
         "stock": 30,
         "imagen": "https://rickandmortyapi.com/api/character/avatar/590.jpeg",
-        "categoria": "unknown - Human"
+        "categoria": "unknown - Human",
+        "cantidad": 13
     }
 ]
