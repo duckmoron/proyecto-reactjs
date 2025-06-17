@@ -11,7 +11,7 @@ const Cart = ({ isOpen, onClose }) => {
         <div className={`cart-drawer ${isOpen ? "open" : ""}`}>
             <div className="cart-header">
                 <h2>Carrito de Compras</h2>
-                <button onClick={onClose} className="close-button">X</button>
+                <button  style={{color:'black'}} onClick={onClose} className="close-button">X</button>
             </div>
             <div className="cart-content">
                 {cart.length === 0
@@ -24,7 +24,7 @@ const Cart = ({ isOpen, onClose }) => {
                                         {item.nombre} - {item.precio} -{" "}
                                         {item.cantidad}
                                     </span>
-                                    <button
+                                    <button  style={{color:'black'}} 
                                         onClick={() =>
                                             handleDeleteFromCart(item)}
                                     >
@@ -41,7 +41,7 @@ const Cart = ({ isOpen, onClose }) => {
                                         0,
                                     )}
                                 </p>
-                                <button className="btnCheckout">
+                                <button style={{color:'black'}} className="btnCheckout">
                                     Finalizar compra
                                 </button>
                             </div>

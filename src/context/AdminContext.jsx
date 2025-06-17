@@ -1,5 +1,5 @@
 import { createContext, useEffect, useState } from "react";
-
+import Swal from "sweetalert2";
 export const AdminContext = createContext()
 
 export const AdminProvider = ({ children }) => {
@@ -51,7 +51,11 @@ export const AdminProvider = ({ children }) => {
             throw new Error('Error al agregar producto')
         }
         const data = await respuesta.json()
-        alert('Producto agregado correctamente')
+        Swal.fire({
+                title: ":)!",
+                text: "Producto agregado correctamente!",
+                icon: "success"
+            });
         cargarProductos()
         setOpen(false)
         }catch(error){
@@ -71,7 +75,11 @@ export const AdminProvider = ({ children }) => {
                 })
                 if(!respuesta.ok) throw Error ('Error al actualizar el producto')
                     const data = await respuesta.json()
-                alert('Producto actualizado correctamente')
+                Swal.fire({
+                    title: ":)!",
+                    text: "Producto actualizado correctamente",
+                    icon: "success"
+                });
                 setOpenEditor(false)
                 setSeleccionado(null)
                 cargarProductos()
@@ -89,10 +97,18 @@ export const AdminProvider = ({ children }) => {
                     method:'DELETE',
                 })
                 if(!respuesta.ok) throw Error('Error al eliminar')
-                alert('Producto Eliminado correctamente')
+                Swal.fire({
+                    title: ":(!",
+                    text: "Producto Eliminado correctamente!",
+                    icon: "error"
+                });
                 cargarProductos()
             }catch(error){
-                alert('Hubo un problema al eliminar el producto')
+                Swal.fire({
+                    title: ":(!",
+                    text: "Hubo un problema al eliminar el producto",
+                    icon: "error"
+                });
             }
         }
     }
