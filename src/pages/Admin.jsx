@@ -7,7 +7,7 @@ import { useNavigate } from "react-router-dom";
 
 const Admin = () => {
 
-    const {setIsAuth} = useContext(CartContext)
+    const { setIsAuth } = useContext(CartContext)
 
     const {
         productos,
@@ -60,21 +60,21 @@ const Admin = () => {
                                 <span>{product.nombre}</span>
                                 <span>${product.precio}</span>
                                 <div>
-                                    <button className="editButton" onClick={()=>{
+                                    <button className="editButton" onClick={() => {
                                         setOpenEditor(true)
                                         setSeleccionado(product)
                                     }}>Editar</button>
 
-                                    <button className="deleteButton" onClick={()=> eliminarProducto(product.id)}>Eliminar</button>
+                                    <button className="deleteButton" onClick={() => eliminarProducto(product.id)}>Eliminar</button>
                                 </div>
                             </li>
                         ))}
                     </ul>
                 </>
             )}
-            <button onClick={()=> setOpen(true)}>Agregar producto nuevo</button>
-            {open && (<FormularioProducto onAgregar={agregarProducto}/>)}
-            {openEditor && (<FormularioEdicion productoSeleccionado={seleccionado} onActualizar={actulizarProducto}/>)}
+            <button onClick={() => setOpen(true)}>Agregar producto nuevo</button>
+            {open && (<FormularioProducto onAgregar={agregarProducto} />)}
+            {openEditor && (<FormularioEdicion productoSeleccionado={seleccionado} onActualizar={actulizarProducto} />)}
         </div>
     );
 };

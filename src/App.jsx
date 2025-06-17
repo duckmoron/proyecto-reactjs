@@ -21,24 +21,23 @@ function App() {
   return (
     <>
         <Routes>
-          <Route path='/' element={
-            <RutaProtegida isAuthenticated={isAuthenticated} requeridRole='cliente' role={role}>
-              <Home />
-            </RutaProtegida> } />
 
-          <Route path='/acercade' element={<AcercaDe  />} />
+          <Route path='/' element={<Home />} />
 
-          <Route path='/productos' element={<GaleriaDeProductos  />} />
+          <Route path='/acercade' element={<AcercaDe />} />
 
-          <Route path='/productos/:id/' element={<DetallesProductos />}/>
+          <Route path='/productos' element={<GaleriaDeProductos />} />
 
-          <Route path='/contacto' element={<Contacto  />} />
+          <Route path='/productos/:id' element={<DetallesProductos />} />
 
-          <Route path='/admin' element={<RutaProtegida isAuthenticated={isAuthenticated} requeridRole='admin'> <Admin /> </RutaProtegida>} />
+          <Route path='/contacto' element={<Contacto />} />
+
+          <Route path='/admin' element={<RutaProtegida isAuthenticated={isAuthenticated}> <Admin /> </RutaProtegida>} />
 
           <Route path='/login' element={<Login />} />
 
-          <Route path='*' element={<NotFound/>} />
+          <Route path='*' element={<NotFound />} />
+
         </Routes>
     </>
   )
