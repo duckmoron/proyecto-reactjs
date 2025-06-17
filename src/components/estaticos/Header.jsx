@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import React, {useState,useContext} from 'react'
+import { Link, NavLink } from 'react-router-dom'
 import "./styleEstatico.css";
 import Cart from "../Cart";
 
@@ -12,10 +12,10 @@ const Header = () => {
     <header>
       <nav className="navHeader">
         <ul className="navLinks">
-          <li><Link to='/' className='link'>Inicio</Link></li>
-          <li><Link to='/acercade' className='link'>Sobre Nosotros</Link></li>
-          <li><Link to='/productos' className='link'>Galería de Productos</Link></li>
-          <li><Link to='/contacto' className='link'>Contacto</Link></li>
+          <li><NavLink to='/' className='link'>Inicio</NavLink></li>
+          <li><NavLink to='/acercade' className='link'>Sobre Nosotros</NavLink></li>
+          <li><NavLink to='/productos' className='link'>Galería de Productos</NavLink></li>
+          <li><NavLink to='/contacto' className='link'>Contacto</NavLink></li>
         </ul>
         <ul className="navIcons">
           <li className='cartnav'>
@@ -25,14 +25,14 @@ const Header = () => {
             <Cart isOpen={isCartOpen} onClose={() => setCartOpen(false)} />
           </li>
           <li className='btnLogin'>
-            <Link to='/login' className='link'>
+            <NavLink to='/login' className='link'>
               <i className="fa-solid fa-right-to-bracket"></i>
-            </Link>
+            </NavLink>
           </li>
           <li className='btnAdmin'>
-            <Link to='/admin' className='link'>
+            <NavLink to='/admin' className='link'>
               <i className="fa-solid fa-user-tie"></i>
-            </Link>
+            </NavLink>
           </li>
         </ul>
       </nav>

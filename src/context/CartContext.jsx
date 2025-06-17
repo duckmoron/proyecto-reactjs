@@ -8,9 +8,10 @@ export const CartProvider = ({ children }) => {
     const [cargando, setCargando] = useState(true)
     const [error, setError] = useState(false)
     const [isAuthenticated, setIsAuth] = useState(false)
+    const apiUrl = 'https://6850bd40e7c42cfd17997288.mockapi.io/product'
 
     useEffect(() => {
-        fetch("/data/data.json")
+        fetch(apiUrl)
             .then(respuesta => respuesta.json())
             .then(datos => {
                 setTimeout(() => {
