@@ -1,30 +1,30 @@
-import { createContext, useEffect, useState } from "react";
+import { createContext, useState, useEffect } from "react";
 
-export const CartContext = createContext();
+export const CartContext = createContext()
 
 export const CartProvider = ({ children }) => {
-    const [cart, setCart] = useState([]);
-    const [productos, setProductos] = useState([]);
-    const [cargando, setCargando] = useState(true);
-    const [error, setError] = useState(false);
-
-    const [isAuthenticated, setIsAuth] = useState(false);
+    const [cart, setCart] = useState([])
+    const [productos, setProductos] = useState([])
+    const [cargando, setCargando] = useState(true)
+    const [error, setError] = useState(false)
+    const [isAuthenticated, setIsAuth] = useState(false)
 
     useEffect(() => {
         fetch("/data/data.json")
-            .then((respuesta) => respuesta.json())
-            .then((datos) => {
+            .then(respuesta => respuesta.json())
+            .then(datos => {
                 setTimeout(() => {
-                    setProductos(datos);
-                    setCargando(false);
-                }, 2000);
+                    setProductos(datos)
+                    setCargando(false)
+                }, 2000)
             })
-            .catch((error) => {
-                console.log("Error", error);
-                setCargando(false);
-                setError(true);
-            });
-    }, []);
+            .catch(error => {
+                console.log('Error', error)
+                setCargando(false)
+                setError(true)
+            })
+
+    }, [])
 
     if (error) {
         return (

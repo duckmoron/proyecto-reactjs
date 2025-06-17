@@ -5,8 +5,7 @@ import { useAuth } from '../context/AuthContext';
 
 const Login = () => {
 
-  const { setIsAuth } = useContext(CartContext)
-  const {email, setEmail,password, setPassword, handleSubmit} = useAuth()
+  const {email, setEmail,password, setPassword, handleSubmit ,errors} = useAuth()
 
   return (
     <form

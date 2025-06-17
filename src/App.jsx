@@ -3,23 +3,28 @@ import './App.css'
 import { Routes, Route } from 'react-router-dom'
 import Home from './pages/Home'
 import AcercaDe from './pages/AcercaDe'
-import GaleriaDeProductos from './pages/GaleriaDeProductos'
 import Contacto from './pages/Contacto'
+import GaleriaDeProductos from './pages/GaleriaDeProductos'
 import NotFound from './pages/NotFound'
 import Admin from './pages/Admin'
 import DetallesProductos from './components/DetallesProductos'
 import Login from './pages/Login'
 import RutaProtegida from './auth/RutaProtegida'
 import { CartContext } from './context/CartContext'
+import { useAuth } from './context/AuthContext'
 
 function App() {
 
-  const { cart, productos, cargando, error, handleAddToCart, handleDeleteFromCart, isAuthenticated } = useContext(CartContext)
+  const { isAuthenticated} = useContext(CartContext)
+  const { role } = useAuth()
 
   return (
     <>
         <Routes>
-          <Route path='/' element={<Home  />} />
+          <Route path='/' element={
+            <RutaProtegida isAuthenticated={isAuthenticated} requeridRole='cliente' role={role}>
+              <Home />
+            </RutaProtegida> } />
 
           <Route path='/acercade' element={<AcercaDe  />} />
 
@@ -29,7 +34,8 @@ function App() {
 
           <Route path='/contacto' element={<Contacto  />} />
 
-          <Route path='/admin' element={<RutaProtegida isAuthenticated={isAuthenticated}> <Admin /> </RutaProtegida>} />
+          <Route path='/admin' element={<RutaProtegida isAuthenticated={isAuthenticated} requeridRole='admin'> <Admin /> </RutaProtegida>} />
+
           <Route path='/login' element={<Login />} />
 
           <Route path='*' element={<NotFound/>} />
