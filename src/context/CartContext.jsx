@@ -9,6 +9,7 @@ export const CartProvider = ({ children }) => {
     const [error, setError] = useState(false)
     const [isAuthenticated, setIsAuth] = useState(false)
     const apiUrl = 'https://6850bd40e7c42cfd17997288.mockapi.io/product'
+    const [busqueda, setBusqueda]= useState("")
 
     useEffect(() => {
         fetch(apiUrl)
@@ -35,6 +36,9 @@ export const CartProvider = ({ children }) => {
             </p>
         );
     }
+
+    const productosFiltrados = productos.filter((producto)=> producto?.nombre.toLowerCase().includes(busqueda.toLowerCase()))
+
 
     const handleAddToCart = (product) => {
         const productInCart = cart.find((item) => item.id === product.id);
@@ -78,6 +82,9 @@ export const CartProvider = ({ children }) => {
                 handleDeleteFromCart,
                 isAuthenticated,
                 setIsAuth,
+                productosFiltrados,
+                busqueda,
+                setBusqueda
             }}
         >
             {children}
