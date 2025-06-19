@@ -9,26 +9,15 @@ export const AuthProvider = ({ children }) => {
   const [errors, setErrors] = useState({});
   const navigate = useNavigate();
   const { setIsAuth } = useContext(CartContext)
-  const [role, setRole] = useState('');
-  
-useEffect(()=>{
-    const isAuthenticated = localStorage.getItem('isAuth') === 'true'
-    const userRole = localStorage.getItem('role') || '';
-   
-    
-    if(isAuthenticated && userRole === 'admin'){
-      setIsAuth(true)
-      setRole(userRole)
-      navigate('/admin')
-    }else if(isAuthenticated && userRole === 'cliente'){
-      setIsAuth(true)
-      setRole(userRole)
-      
-      navigate('/')
-    }
-  
-  },[])
 
+  useEffect(()=>{
+    const isAuthenticated = localStorage.getItem('isAuth') === 'true'
+    if(isAuthenticated){
+      setIsAuth(true)
+      navigate('/admin')
+    }
+  },[])
+  
   const handleSubmit = async (e) => {
     e.preventDefault();
     let validationErrors = {};
@@ -56,12 +45,8 @@ useEffect(()=>{
         if (foundUser.role === 'admin') {
           setIsAuth(true);
           localStorage.setItem('isAuth', true)
-          localStorage.setItem('role', foundUser.role);
           navigate('/admin');
         } else {
-          setIsAuth(true);
-          localStorage.setItem('isAuth', true)
-          localStorage.setItem('role', foundUser.role);
           navigate('/');
         }
       }
@@ -73,7 +58,7 @@ useEffect(()=>{
  
 
   return (
-    <AuthContext.Provider value={{email, setEmail,password, setPassword, handleSubmit,errors,role}}>
+    <AuthContext.Provider value={{email, setEmail,password, setPassword, handleSubmit,errors}}>
       {children}
     </AuthContext.Provider>
   );
