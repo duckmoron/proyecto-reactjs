@@ -13,6 +13,9 @@ import RutaProtegida from './auth/RutaProtegida'
 import { CartContext } from './context/CartContext'
 import { useAuth } from './context/AuthContext'
 
+import '@fontsource/inter'; // Inter como fuente base
+import '@fontsource/domine'; // Domine para números
+
 function App() {
 
   const { isAuthenticated} = useContext(CartContext)

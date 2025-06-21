@@ -20,12 +20,12 @@ const Productos = ({producto}) => {
             </div>
 
             <h3 className="nombre">{producto.nombre}</h3>
-            <p className="precio">${producto.precio}</p>
-            <p className="stock">{producto.stock}</p>
+            <p className="precio numeros">${producto.precio}</p>
+            <p  numeros>{producto.stock}</p>
 
             <div className="cantidadContainer">
                 <button className="qtyButton" onClick={decrease}>-</button>
-                <span>{cantidad}</span>
+                <span className="numeros">{cantidad}</span>
                 <button className="qtyButton" onClick={increase}>+</button>
             </div>
 

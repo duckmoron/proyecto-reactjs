@@ -1,3 +1,18 @@
+@import "tailwindcss";
+
+/* Inter como fuente principal */
+body {
+  font-family: 'Inter', sans-serif;
+}
+
+/* Domine solo para los números */
+.numeros {
+  font-family: 'Domine', serif;
+}
+.link {
+  text-decoration: none;
+}
+
 .link.active {
   color: #007bff;
   font-weight: bold;
