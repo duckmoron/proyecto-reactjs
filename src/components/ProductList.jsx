@@ -8,7 +8,7 @@ const ProductList = () => {
   const { productos, productosFiltrados, busqueda, setBusqueda } = useContext(CartContext)
 
   const [currentPage, setCurrentPage] = useState(1)
-  const itemsPerPage = 3
+  const itemsPerPage = 6
   const indexOfLast = currentPage * itemsPerPage
   const indexOfFirst = indexOfLast - itemsPerPage
   const currentProducts = productosFiltrados.slice(indexOfFirst, indexOfLast)
@@ -29,17 +29,19 @@ const ProductList = () => {
           ))
         }
       </div>
-      <Pagination>
-        <Pagination.Prev onClick={()=>setCurrentPage(p => Math.max(p-1,1))} disabled={currentPage === 1}/>
-          {
-            Array.from({length:totalPages},(_,i) => (
-              <Pagination.Item key={i+1} active={i+1 === currentPage} onClick={() => setCurrentPage(i+1)}>
-                {i+1}
-              </Pagination.Item>
-            ))
-          }
-        <Pagination.Next onClick={()=>setCurrentPage(p => Math.min(p+1,totalPages))} disabled={currentPage === totalPages}/>
-      </Pagination>
+      <div className="flex justify-center">
+        <Pagination>
+          <Pagination.Prev onClick={()=>setCurrentPage(p => Math.max(p-1,1))} disabled={currentPage === 1}/>
+            {
+              Array.from({length:totalPages},(_,i) => (
+                <Pagination.Item key={i+1} active={i+1 === currentPage} onClick={() => setCurrentPage(i+1)}>
+                  {i+1}
+                </Pagination.Item>
+              ))
+            }
+          <Pagination.Next onClick={()=>setCurrentPage(p => Math.min(p+1,totalPages))} disabled={currentPage === totalPages}/>
+        </Pagination>
+      </div>
     </>
   )
 }
