@@ -1,12 +1,28 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { NavLink } from 'react-router-dom';
 import Cart from "../Cart";
 import logo from '../../assets/logo.png';
 
+import { CartContext } from "../../context/CartContext";
+
+// Subcomponente para los enlaces del menú
 // Subcomponente para los enlaces del menú
 const MenuLinks = ({ isMobile = false, onLinkClick, iconClass, setCartOpen }) => {
   const baseClass = isMobile ? "space-y-3" : "space-x-6 items-center";
   const containerClass = isMobile ? "flex flex-col" : "flex";
+
+  const { cart } = useContext(CartContext);
+  const [animate, setAnimate] = useState(false);
+
+  // Activar animación cuando cambia la cantidad de productos
+  useEffect(() => {
+    if (cart.length === 0) return;
+
+    setAnimate(true);
+    const timeout = setTimeout(() => setAnimate(false), 300);
+
+    return () => clearTimeout(timeout);
+  }, [cart.length]);
 
   return (
     <div className={`${containerClass} ${baseClass}`}>
@@ -15,7 +31,20 @@ const MenuLinks = ({ isMobile = false, onLinkClick, iconClass, setCartOpen }) =>
       <NavLink className="link transition" to="/productos" onClick={onLinkClick}>Galería de productos</NavLink>
       <NavLink className="link transition" to="/contacto" onClick={onLinkClick}>Contacto</NavLink>
 
-      <div onClick={() => { setCartOpen(true); onLinkClick?.(); }} className="transition cursor-pointer">
+      <div
+        onClick={() => { setCartOpen(true); onLinkClick?.(); }}
+        className="relative transition cursor-pointer"
+      >
+        {/* Contador solo si hay productos */}
+        {cart.length > 0 && (
+          <span
+            className={`absolute -top-2 -right-2 bg-red-600 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center transition-transform duration-300 ${
+              animate ? 'scale-125' : 'scale-100'
+            }`}
+          >
+            {cart.length}
+          </span>
+        )}
         <i className={`fa-solid fa-cart-shopping ${iconClass}`}></i>
       </div>
 
@@ -28,6 +57,7 @@ const MenuLinks = ({ isMobile = false, onLinkClick, iconClass, setCartOpen }) =>
     </div>
   );
 };
+
 
 const Header = () => {
   const [isCartOpen, setCartOpen] = useState(false);

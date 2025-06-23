@@ -52,13 +52,41 @@ export const CartProvider = ({ children }) => {
                 ),
             );
         } else {
-            toast.success(`El producto ${product.nombre} se ha agregado al carrito`)
+            toast.success(
+            <div className="flex items-center gap-3">
+                <img
+                src={product.imagen}
+                alt={product.nombre}
+                className="w-10 h-10 object-cover rounded"
+                />
+                <span>
+                El producto <strong>{product.nombre}</strong> se ha agregado al carrito.
+                </span>
+            </div>, {
+                className: 'bg-green-100 text-green-900 border border-green-400 rounded-md shadow-md',
+                bodyClassName: 'text-sm',
+                position: "top-center"
+            });
             setCart([...cart, { ...product, cantidad: product.cantidad }]);
         }
     };
 
     const handleDeleteFromCart = (product) => {
-        toast.error(`El producto ${product.nombre} se ha eliminado al carrito`)
+        toast.error(
+            <div className="flex items-center gap-3">
+                <img
+                src={product.imagen}
+                alt={product.nombre}
+                className="w-10 h-10 object-cover rounded"
+                />
+                <span>
+                El producto <strong>{product.nombre}</strong> se ha eliminado al carrito.
+                </span>
+            </div>,  {
+            className: 'bg-red-100 text-red-900 border border-red-400 rounded-md shadow-md',
+            bodyClassName: 'text-sm',
+            position: "top-center"
+        });
         setCart((prevCart) => {
             return prevCart.map((item) => {
                 if (item.id === product.id) {
@@ -72,7 +100,42 @@ export const CartProvider = ({ children }) => {
                 }
             }).filter((item) => item !== null); // Quitamos los productos nulos
         });
+        
     };
+
+    const updateQuantity = (id, nuevaCantidad) => {
+        setCart((prevCart) =>
+            prevCart.map((item) =>
+                item.id === id ? { ...item, cantidad: nuevaCantidad } : item
+            )
+        );
+    };
+
+    const removeFromCart = (productId) => {
+        setCart((prevCart) => prevCart.filter((item) => item.id !== productId));
+
+        const producto = cart.find((item) => item.id === productId);
+        if (producto) {
+            toast.error(
+                <div className="flex items-center gap-3">
+                    <img
+                        src={producto.imagen}
+                        alt={producto.nombre}
+                        className="w-10 h-10 object-cover rounded"
+                    />
+                    <span>
+                        Se eliminó <strong>{producto.nombre}</strong> del carrito.
+                    </span>
+                </div>,
+                {
+                    className: 'bg-red-100 text-red-900 border border-red-400 rounded-md shadow-md',
+                    bodyClassName: 'text-sm',
+                    position: "top-center"
+                }
+            );
+        }
+    };
+
 
     return (
         <CartContext.Provider
@@ -83,6 +146,8 @@ export const CartProvider = ({ children }) => {
                 error,
                 handleAddToCart,
                 handleDeleteFromCart,
+                updateQuantity,
+                removeFromCart,
                 isAuthenticated,
                 setIsAuth,
                 productosFiltrados,

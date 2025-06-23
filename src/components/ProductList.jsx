@@ -68,7 +68,7 @@ const ProductList = () => {
             <button
               key={i + 1}
               onClick={() => setCurrentPage(i + 1)}
-              className={`px-3 py-1 rounded ${
+              className={`px-3 py-1 ${
                 currentPage === i + 1
                   ? 'bg-blue-700 text-white font-bold'
                   : 'bg-blue-100 text-blue-700 hover:bg-blue-200'
