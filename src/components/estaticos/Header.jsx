@@ -5,24 +5,10 @@ import logo from '../../assets/logo.png';
 
 import { CartContext } from "../../context/CartContext";
 
-// Subcomponente para los enlaces del menú
-// Subcomponente para los enlaces del menú
-const MenuLinks = ({ isMobile = false, onLinkClick, iconClass, setCartOpen }) => {
+// Enlaces del menú
+const MenuLinks = ({ isMobile = false, onLinkClick }) => {
   const baseClass = isMobile ? "space-y-3" : "space-x-6 items-center";
   const containerClass = isMobile ? "flex flex-col" : "flex";
-
-  const { cart } = useContext(CartContext);
-  const [animate, setAnimate] = useState(false);
-
-  // Activar animación cuando cambia la cantidad de productos
-  useEffect(() => {
-    if (cart.length === 0) return;
-
-    setAnimate(true);
-    const timeout = setTimeout(() => setAnimate(false), 300);
-
-    return () => clearTimeout(timeout);
-  }, [cart.length]);
 
   return (
     <div className={`${containerClass} ${baseClass}`}>
@@ -30,12 +16,28 @@ const MenuLinks = ({ isMobile = false, onLinkClick, iconClass, setCartOpen }) =>
       <NavLink className="link transition" to="/acercade" onClick={onLinkClick}>Sobre nosotros</NavLink>
       <NavLink className="link transition" to="/productos" onClick={onLinkClick}>Galería de productos</NavLink>
       <NavLink className="link transition" to="/contacto" onClick={onLinkClick}>Contacto</NavLink>
+    </div>
+  );
+};
 
+// Íconos (carrito, login, admin)
+const HeaderIcons = ({ iconClass, setCartOpen }) => {
+  const { cart } = useContext(CartContext);
+  const [animate, setAnimate] = useState(false);
+
+  useEffect(() => {
+    if (cart.length === 0) return;
+    setAnimate(true);
+    const timeout = setTimeout(() => setAnimate(false), 300);
+    return () => clearTimeout(timeout);
+  }, [cart.length]);
+
+  return (
+    <div className="flex items-center space-x-4">
       <div
-        onClick={() => { setCartOpen(true); onLinkClick?.(); }}
+        onClick={() => setCartOpen(true)}
         className="relative transition cursor-pointer"
       >
-        {/* Contador solo si hay productos */}
         {cart.length > 0 && (
           <span
             className={`absolute -top-2 -right-2 bg-red-600 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center transition-transform duration-300 ${
@@ -48,16 +50,15 @@ const MenuLinks = ({ isMobile = false, onLinkClick, iconClass, setCartOpen }) =>
         <i className={`fa-solid fa-cart-shopping ${iconClass}`}></i>
       </div>
 
-      <NavLink to="/login" className="transition" onClick={onLinkClick}>
+      <NavLink to="/login" className="transition">
         <i className={`fa-solid fa-right-to-bracket ${iconClass}`}></i>
       </NavLink>
-      <NavLink to="/admin" className="transition" onClick={onLinkClick}>
+      <NavLink to="/admin" className="transition">
         <i className={`fa-solid fa-user-tie ${iconClass}`}></i>
       </NavLink>
     </div>
   );
 };
-
 
 const Header = () => {
   const [isCartOpen, setCartOpen] = useState(false);
@@ -66,12 +67,10 @@ const Header = () => {
 
   const iconClass = "w-5 h-5 text-red-500 hover:text-red-600 transition duration-200 bg-transparent";
 
-  // Detectar scroll para aplicar sombra
   useEffect(() => {
     const handleScroll = () => {
       setScrolled(window.scrollY > 10);
     };
-
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
@@ -79,47 +78,50 @@ const Header = () => {
   return (
     <header className="fixed top-0 left-0 w-full z-50">
       <nav className={`bg-gray-900 text-white transition-shadow duration-300 ${scrolled ? 'shadow-md' : ''}`}>
-        <div className="container mx-auto px-4 py-4 flex items-center justify-between">
-          {/* Logo */}
-          <NavLink className="text-xl font-bold text-white" to="/">
-            <img src={logo} alt="Duck-Commercio Logo" className="h-8 w-auto" />
-          </NavLink>
+        {/* Wrapper principal con altura fija */}
+        <div className="container mx-auto px-4 h-20 flex items-center justify-between">
+          {/* Logo + hamburguesa (solo visible en mobile) */}
+          <div className="flex items-center space-x-4">
+            <NavLink to="/" className="text-xl font-bold text-white">
+              <img src={logo} alt="Duck-Commercio Logo" className="h-8 w-auto" />
+            </NavLink>
 
-          {/* Botón hamburguesa */}
-          <div className="md:hidden">
-            <div onClick={() => setMenuOpen(!isMenuOpen)} className="cursor-pointer transition-all duration-300">
-              <i
-                className={`
-                  fa-solid ${isMenuOpen ? 'fa-xmark' : 'fa-bars'}
-                  ${iconClass} transform transition-transform duration-300
-                `}
-              ></i>
-            </div>
+            {/* Botón hamburguesa */}
+            <button
+              onClick={() => setMenuOpen(!isMenuOpen)}
+              className="md:hidden focus:outline-none"
+            >
+              <i className={`fa-solid ${isMenuOpen ? 'fa-xmark' : 'fa-bars'} ${iconClass}`}></i>
+            </button>
           </div>
 
-          {/* Menú de escritorio */}
-          <div className="hidden md:flex">
-            <MenuLinks iconClass={iconClass} setCartOpen={setCartOpen} />
+          {/* Íconos siempre visibles (tanto mobile como desktop) */}
+          <div className="flex items-center space-x-6">
+            {/* Desktop: menú y luego íconos */}
+            <div className="hidden md:flex space-x-6 items-center">
+              <MenuLinks />
+              <HeaderIcons iconClass={iconClass} setCartOpen={setCartOpen} />
+            </div>
+
+            {/* Mobile: solo íconos */}
+            <div className="md:hidden">
+              <HeaderIcons iconClass={iconClass} setCartOpen={setCartOpen} />
+            </div>
           </div>
         </div>
 
-        {/* Menú móvil con animación */}
+        {/* Menú desplegable solo en mobile */}
         <div
           className={`
             md:hidden px-4 pb-4 origin-top transition-all duration-300 ease-in-out
             transform ${isMenuOpen ? "scale-100 opacity-100 max-h-screen" : "scale-95 opacity-0 max-h-0 overflow-hidden"}
           `}
         >
-          <MenuLinks
-            isMobile
-            iconClass={iconClass}
-            setCartOpen={setCartOpen}
-            onLinkClick={() => setMenuOpen(false)}
-          />
+          <MenuLinks isMobile onLinkClick={() => setMenuOpen(false)} />
         </div>
       </nav>
 
-      {/* Cart */}
+      {/* Modal del carrito */}
       <Cart isOpen={isCartOpen} onClose={() => setCartOpen(false)} />
     </header>
   );

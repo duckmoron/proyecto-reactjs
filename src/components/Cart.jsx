@@ -17,22 +17,25 @@ const CartItem = ({ item }) => {
     };
 
     return (
-        <div className="flex justify-between items-center border-b pb-2">
+        <div className="flex items-center gap-4 border-b pb-3">
             <img
                 src={item.imagen}
                 alt={item.nombre}
-                className="h-10 w-10 object-cover rounded-sm"
+                className="h-16 w-16 object-cover rounded"
             />
-            <div>
-                <div>{item.nombre}</div>
-                <div className="numeros">$ {item.precio}</div>
+            <div className="flex flex-col flex-1">
+                <span className="font-medium">{item.nombre}</span>
+                <span className="text-gray-500 text-sm numeros">$ {item.precio*item.cantidad}</span>
             </div>
             <div className="flex items-center gap-2">
-                <button onClick={decrease} className="px-2">-</button>
-                <span>{item.cantidad}</span>
-                <button onClick={increase} className="px-2">+</button>
+                <button onClick={decrease} className="px-2 border rounded text-sm">-</button>
+                <span className="w-6 text-center">{item.cantidad}</span>
+                <button onClick={increase} className="px-2 border rounded text-sm">+</button>
             </div>
-            <button onClick={() => removeFromCart(item.id)} className="text-black hover:text-red-600">
+            <button
+                onClick={() => removeFromCart(item.id)}
+                className="text-gray-500 hover:text-red-600 ml-2"
+            >
                 <i className="fa-solid fa-trash"></i>
             </button>
         </div>
@@ -40,7 +43,7 @@ const CartItem = ({ item }) => {
 };
 
 const Cart = ({ isOpen, onClose }) => {
-    const { cart, handleDeleteFromCart } = useContext(CartContext);
+    const { cart } = useContext(CartContext);
 
     // Cerrar con la tecla ESC
     useEffect(() => {
@@ -59,6 +62,14 @@ const Cart = ({ isOpen, onClose }) => {
         };
     }, [isOpen, onClose]);
 
+    // Bloquear scroll del body cuando está abierto
+    useEffect(() => {
+        document.body.style.overflow = isOpen ? "hidden" : "auto";
+        return () => {
+            document.body.style.overflow = "auto";
+        };
+    }, [isOpen]);
+
     return (
         <>
             {/* Overlay */}
@@ -71,26 +82,30 @@ const Cart = ({ isOpen, onClose }) => {
 
             {/* Drawer */}
             <div
-                className={`fixed top-0 right-0 h-full w-80 bg-white shadow-lg transform transition-transform duration-300 z-50 flex flex-col ${
-                    isOpen ? "translate-x-0" : "translate-x-full"
-                }`}
+                className={`fixed top-0 right-0 h-full bg-white shadow-lg transform transition-transform duration-300 z-50 flex flex-col
+                    w-full sm:w-[400px] md:w-[500px] lg:w-[500px] ${
+                        isOpen ? "translate-x-0" : "translate-x-full"
+                    }`}
             >
                 {/* Header */}
                 <div className="flex items-center justify-between p-4 border-b border-gray-300">
                     <h2 className="text-lg font-semibold">Carrito de Compras</h2>
-                    <button onClick={onClose} className="text-black text-lg font-bold hover:text-red-500">
-                        X
+                    <button
+                        onClick={onClose}
+                        className="text-black text-lg font-bold hover:text-red-500"
+                    >
+                        <i class="fa-regular fa-2x fa-circle-xmark hover:text-blue-500"></i>
                     </button>
                 </div>
 
-                {/* Contenido scrollable */}
+                {/* Contenido */}
                 <div className="flex-1 p-4 overflow-y-auto">
                     {cart.length === 0 ? (
                         <p className="text-red-500">El carrito está vacío</p>
                     ) : (
                         <div className="space-y-4">
                             {cart.map((item) => (
-                                <CartItem key={item.id} item={item} onDelete={handleDeleteFromCart} />
+                                <CartItem key={item.id} item={item} />
                             ))}
                         </div>
                     )}
@@ -99,9 +114,16 @@ const Cart = ({ isOpen, onClose }) => {
                 {/* Footer */}
                 {cart.length > 0 && (
                     <div className="p-4 border-t border-gray-300">
-                        <p className="text-blue-600 font-semibold mb-4">
-                            Total: <span className="numeros">$ {cart.reduce((total, item) => total + item.precio * item.cantidad, 0)}
-                        </span></p>
+                        <p className="text-blue-600 font-semibold mb-4 text-right text-2xl">
+                            Total:{" "}
+                            <span className="numeros">
+                                ${" "}
+                                {cart.reduce(
+                                    (total, item) => total + item.precio * item.cantidad,
+                                    0
+                                )}
+                            </span>
+                        </p>
                         <button className="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700 transition">
                             Finalizar compra
                         </button>
