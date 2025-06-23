@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
 import Cart from "../Cart";
 import logo from '../../assets/logo.png';
@@ -32,12 +32,23 @@ const MenuLinks = ({ isMobile = false, onLinkClick, iconClass, setCartOpen }) =>
 const Header = () => {
   const [isCartOpen, setCartOpen] = useState(false);
   const [isMenuOpen, setMenuOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
 
   const iconClass = "w-5 h-5 text-red-500 hover:text-red-600 transition duration-200 bg-transparent";
 
+  // Detectar scroll para aplicar sombra
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 10);
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
   return (
-    <header>
-      <nav className="bg-gray-900 text-white">
+    <header className="fixed top-0 left-0 w-full z-50">
+      <nav className={`bg-gray-900 text-white transition-shadow duration-300 ${scrolled ? 'shadow-md' : ''}`}>
         <div className="container mx-auto px-4 py-4 flex items-center justify-between">
           {/* Logo */}
           <NavLink className="text-xl font-bold text-white" to="/">

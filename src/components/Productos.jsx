@@ -23,9 +23,12 @@ const Productos = ({ producto }) => {
                         alt={producto.nombre}
                         className="w-full h-52 object-cover transition-opacity duration-300 group-hover:opacity-60"
                     />
-                    <span className="absolute top-3 right-3 bg-red-500 text-white px-3 py-1 rounded-full text-sm font-medium z-20">
-                        Nuevo
-                    </span>
+                    {/* Mostrar mensaje solo en los 5 primeros */}
+                    {producto.id < 6 && (
+                        <span className="absolute top-3 right-3 bg-red-500 text-white px-3 py-1 rounded-full text-sm font-medium z-20">
+                            Nuevo
+                        </span>
+                    )}
 
                     {/* Texto que aparece sobre la imagen al hacer hover */}
                     <div className="absolute inset-0 flex items-center justify-center text-white text-lg font-bold opacity-0 group-hover:opacity-100 transition-opacity bg-black bg-opacity-50 z-30 pointer-events-none">

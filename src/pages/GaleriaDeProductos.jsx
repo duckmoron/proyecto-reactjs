@@ -12,10 +12,12 @@ const GaleriaDeProductos = () => {
   return (
     <>
       <Header />
-      <main>
-        <h1>Galeria de productos</h1>
-        {cargando ? <img src={loading} alt="loading" /> : <ProductList />}
-      </main>
+        <div className="container pt-20">
+          <main className="min-h-screen bg-white text-gray-800 px-4 md:px-8 lg:px-20 py-10">
+            <h1>Galeria de productos</h1>
+            {cargando ? <img src={loading} alt="loading" /> : <ProductList />}
+          </main>
+        </div>
       <Footer />
     </>
   );
