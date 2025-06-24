@@ -94,14 +94,16 @@ const Cart = ({ isOpen, onClose }) => {
                         onClick={onClose}
                         className="text-black text-lg font-bold hover:text-red-500"
                     >
-                        <i class="fa-regular fa-2x fa-circle-xmark hover:text-blue-500"></i>
+                        <i className="fa-regular fa-2x fa-circle-xmark hover:text-blue-500"></i>
                     </button>
                 </div>
 
-                {/* Contenido */}
-                <div className="flex-1 p-4 overflow-y-auto">
+               <div className="flex-1 p-4 overflow-y-auto">
                     {cart.length === 0 ? (
-                        <p className="text-red-500">El carrito está vacío</p>
+                        <div className="flex flex-col items-center justify-center h-full text-center text-red-500 space-y-4">
+                            <i className={`fa-solid fa-2x fa-cart-shopping`}></i>
+                            <p>El carrito está vacío</p>
+                        </div>
                     ) : (
                         <div className="space-y-4">
                             {cart.map((item) => (

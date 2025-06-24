@@ -13,8 +13,8 @@ const MenuLinks = ({ isMobile = false, onLinkClick }) => {
   return (
     <div className={`${containerClass} ${baseClass}`}>
       <NavLink className="link transition" to="/" onClick={onLinkClick}>Inicio</NavLink>
-      <NavLink className="link transition" to="/acercade" onClick={onLinkClick}>Sobre nosotros</NavLink>
-      <NavLink className="link transition" to="/productos" onClick={onLinkClick}>Galería de productos</NavLink>
+      <NavLink className="link transition" to="/productos" onClick={onLinkClick}>Productos</NavLink>
+      <NavLink className="link transition" to="/acercade" onClick={onLinkClick}>Nosotros</NavLink>
       <NavLink className="link transition" to="/contacto" onClick={onLinkClick}>Contacto</NavLink>
     </div>
   );
@@ -34,6 +34,12 @@ const HeaderIcons = ({ iconClass, setCartOpen }) => {
 
   return (
     <div className="flex items-center space-x-4">
+      <NavLink to="/login" className="transition">
+        <i className={`fa-solid fa-right-to-bracket ${iconClass}`}></i>
+      </NavLink>
+      <NavLink to="/admin" className="transition">
+        <i className={`fa-solid fa-user-tie ${iconClass}`}></i>
+      </NavLink>
       <div
         onClick={() => setCartOpen(true)}
         className="relative transition cursor-pointer"
@@ -50,12 +56,7 @@ const HeaderIcons = ({ iconClass, setCartOpen }) => {
         <i className={`fa-solid fa-cart-shopping ${iconClass}`}></i>
       </div>
 
-      <NavLink to="/login" className="transition">
-        <i className={`fa-solid fa-right-to-bracket ${iconClass}`}></i>
-      </NavLink>
-      <NavLink to="/admin" className="transition">
-        <i className={`fa-solid fa-user-tie ${iconClass}`}></i>
-      </NavLink>
+      
     </div>
   );
 };
@@ -65,7 +66,7 @@ const Header = () => {
   const [isMenuOpen, setMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
 
-  const iconClass = "w-5 h-5 text-red-500 hover:text-red-600 transition duration-200 bg-transparent";
+  const iconClass = "w-5 h-5 text-white-500 hover:text-red-600 transition duration-200 bg-transparent";
 
   useEffect(() => {
     const handleScroll = () => {

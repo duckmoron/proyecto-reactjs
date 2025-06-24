@@ -1,40 +1,67 @@
 import React, { useContext, useState } from "react";
 import { Link } from "react-router-dom";
 import { CartContext } from "../context/CartContext";
+import { AnimatePresence, motion } from "framer-motion";
 
 const Productos = ({ producto }) => {
     const { handleAddToCart } = useContext(CartContext);
     const [cantidad, setCantidad] = useState(1);
+    const [hover, setHover] = useState(false);
 
     const increase = () =>
         setCantidad((prev) => (prev < producto.stock ? prev + 1 : prev));
     const decrease = () => setCantidad((prev) => (prev > 1 ? prev - 1 : 1));
 
     return (
-        <div className="my-4 w-full max-w-sm min-h-[500px] bg-white rounded-xl shadow-lg overflow-hidden group transition-all flex flex-col justify-between">
+        <div className="my-4 w-full max-w-sm min-h-[500px] bg-white rounded-xl shadow-lg overflow-hidden transition-all flex flex-col justify-between">
             {/* Imagen y título */}
             <div>
-                <Link
-                    to={`/productos/${producto.id}`}
-                    className="relative block group"
+                <div
+                    className="relative w-full h-52 overflow-hidden"
+                    onMouseEnter={() => setHover(true)}
+                    onMouseLeave={() => setHover(false)}
                 >
-                    <img
-                        src={producto.imagen}
-                        alt={producto.nombre}
-                        className="w-full h-52 object-cover transition-opacity duration-300 group-hover:opacity-60"
-                    />
-                    {/* Mostrar mensaje solo en los 5 primeros */}
-                    {producto.id < 6 && (
-                        <span className="absolute top-3 right-3 bg-red-500 text-white px-3 py-1 rounded-full text-sm font-medium z-20">
-                            Nuevo
-                        </span>
-                    )}
+                    <Link
+                        to={`/productos/${producto.id}`}
+                        className="block w-full h-full"
+                    >
+                        {/* Imagen que escala */}
+                        <motion.img
+                            src={producto.imagen}
+                            alt={producto.nombre}
+                            className="w-full h-full object-cover"
+                            initial={{ scale: 1 }}
+                            animate={hover ? { scale: 1.05 } : { scale: 1 }}
+                            transition={{ duration: 0.3, ease: "easeOut" }}
+                        />
 
-                    {/* Texto que aparece sobre la imagen al hacer hover */}
-                    <div className="absolute inset-0 flex items-center justify-center text-white text-lg font-bold opacity-0 group-hover:opacity-100 transition-opacity bg-black bg-opacity-50 z-30 pointer-events-none">
-                        VER MÁS
-                    </div>
-                </Link>
+                        {/* Overlay negro que solo cambia opacity */}
+                        <AnimatePresence>
+                            {hover && (
+                                <motion.div
+                                    initial={{ opacity: 0 }}
+                                    animate={{ opacity: 1 }}
+                                    exit={{ opacity: 0 }}
+                                    transition={{
+                                        duration: 0.3,
+                                        ease: "easeOut",
+                                    }}
+                                    className="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center z-20 pointer-events-none"
+                                >
+                                    <span className="text-white text-lg font-bold numeros">
+                                        <i className="fa fa-2x fa-search-plus" aria-hidden="true"></i>
+                                    </span>
+                                </motion.div>
+                            )}
+                        </AnimatePresence>
+
+                        {producto.id < 6 && (
+                            <span className="absolute top-3 right-3 bg-red-500 text-white px-3 py-1 rounded-full text-sm font-medium z-30">
+                                Nuevo
+                            </span>
+                        )}
+                    </Link>
+                </div>
 
                 <div className="p-4">
                     <h3 className="text-xl font-bold text-gray-900 line-clamp-2">
@@ -45,14 +72,11 @@ const Productos = ({ producto }) => {
 
             {/* Contenido inferior */}
             <div className="px-4 pb-4 space-y-4 mt-auto">
-                {/* Precio a la izquierda, contador + stock a la derecha */}
                 <div className="flex justify-between items-start">
-                    {/* Precio */}
                     <p className="numeros text-4xl font-bold text-gray-900">
                         $ {producto.precio}
                     </p>
 
-                    {/* Contador y stock */}
                     <div className="flex flex-col items-end">
                         <div className="bg-gray-200 inline-flex items-center border rounded overflow-hidden">
                             <button
@@ -72,14 +96,12 @@ const Productos = ({ producto }) => {
                             </button>
                         </div>
 
-                        {/* Stock debajo alineado a la derecha */}
                         <p className="numeros text-sm text-gray-500 mt-1 text-right">
                             Stock: {producto.stock}
                         </p>
                     </div>
                 </div>
 
-                {/* Botón agregar al carrito */}
                 {cantidad > 0 && (
                     <button
                         onClick={() =>

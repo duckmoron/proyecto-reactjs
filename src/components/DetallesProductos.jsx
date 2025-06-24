@@ -15,7 +15,8 @@ const DetallesProductos = () => {
   return (
     <>
       <Header />
-        <main style={{margin:'50px auto'}}>
+        <div className="container pt-14">
+        <main className="min-h-screen bg-white text-gray-800 px-4 md:px-8 lg:px-20 py-10">
           <section
             style={{
               maxWidth: '600px',
@@ -84,6 +85,7 @@ const DetallesProductos = () => {
             </Link>
           </section>
         </main>
+        </div>
       <Footer />
     </>
   )
