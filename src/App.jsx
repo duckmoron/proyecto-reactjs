@@ -12,6 +12,8 @@ import Login from './pages/Login'
 import RutaProtegida from './auth/RutaProtegida'
 import { CartContext } from './context/CartContext'
 import { useAuth } from './context/AuthContext'
+import "slick-carousel/slick/slick.css"; 
+import "slick-carousel/slick/slick-theme.css";
 
 import '@fontsource/inter'; // Inter como fuente base
 import '@fontsource/domine'; // Domine para números

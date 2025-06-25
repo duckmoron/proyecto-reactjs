@@ -83,7 +83,7 @@ const ProductList = () => {
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
         {currentProducts.length > 0 ? (
           currentProducts.map((producto) => (
-            <Productos key={producto.id} producto={producto} />
+            <Productos key={producto.id} producto={producto} className="shadow-lg" />
           ))
         ) : (
           <p className="text-center text-red-500 col-span-full">

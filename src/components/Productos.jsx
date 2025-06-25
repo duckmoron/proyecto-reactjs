@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { CartContext } from "../context/CartContext";
 import { AnimatePresence, motion } from "framer-motion";
 
-const Productos = ({ producto }) => {
+const Productos = ({ producto, className = "" }) => {
     const { handleAddToCart } = useContext(CartContext);
     const [cantidad, setCantidad] = useState(1);
     const [hover, setHover] = useState(false);
@@ -13,7 +13,7 @@ const Productos = ({ producto }) => {
     const decrease = () => setCantidad((prev) => (prev > 1 ? prev - 1 : 1));
 
     return (
-        <div className="my-4 w-full max-w-sm min-h-[500px] bg-white rounded-xl shadow-lg overflow-hidden transition-all flex flex-col justify-between">
+        <div className={`my-4 w-full max-w-sm min-h-[500px] bg-white rounded-xl overflow-hidden transition-all flex flex-col justify-between ${className}`}>
             {/* Imagen y título */}
             <div>
                 <div
