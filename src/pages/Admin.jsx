@@ -65,8 +65,25 @@ const Admin = () => {
     // Modal agregar producto
     const handleAgregarProducto = () => {
         MySwal.fire({
-            title: "Agregar nuevo producto",
-            html: <FormularioProducto ref={formAgregarRef} />,
+            html: (
+                <div className="text-left space-y-4">
+                    {/* Encabezado consistente sin imagen */}
+                    <div className="flex items-center space-x-4">
+                        <div>
+                            <div className="text-2xl font-bold">
+                                Agregar nuevo producto:
+                            </div>
+                            {/* Opcional: espacio para nombre vacío para igualar alturas */}
+                            <div className="text-sm text-gray-600 opacity-0">
+                                Nombre aquí
+                            </div>
+                        </div>
+                    </div>
+
+                    {/* Formulario de agregar */}
+                    <FormularioProducto ref={formAgregarRef} />
+                </div>
+            ),
             showCancelButton: true,
             confirmButtonText: "Agregar",
             cancelButtonText: "Cancelar",
@@ -95,13 +112,33 @@ const Admin = () => {
     // Modal editar producto
     const handleEditarProducto = (producto) => {
         MySwal.fire({
-            title: `Editar producto: ${producto.nombre}`,
             html: (
-                <FormularioEdicion
-                    ref={formEditarRef}
-                    productoSeleccionado={producto}
-                />
+                <div className="text-left space-y-4">
+                    {/* Encabezado con imagen y texto */}
+                    <div className="flex items-center space-x-4">
+                        <img
+                            src={producto.imagen}
+                            alt={producto.nombre}
+                            className="w-20 h-20 object-cover rounded border"
+                        />
+                        <div>
+                            <div className="text-2xl font-bold">
+                                Editar producto:
+                            </div>
+                            <div className="text-sm text-gray-600">
+                                {producto.nombre}
+                            </div>
+                        </div>
+                    </div>
+
+                    {/* Formulario debajo del encabezado */}
+                    <FormularioEdicion
+                        ref={formEditarRef}
+                        productoSeleccionado={producto}
+                    />
+                </div>
             ),
+
             showCancelButton: true,
             confirmButtonText: "Actualizar",
             cancelButtonText: "Cancelar",
@@ -223,32 +260,54 @@ const Admin = () => {
                             </div>
 
                             {/* Listado productos */}
-                            <ul className="space-y-4">
+                            <ul className="space-y-4 !pl-0 list-none">
                                 {currentProducts.length > 0
                                     ? (
                                         currentProducts.map((product) => (
                                             <li
                                                 key={product.id}
-                                                className="bg-white rounded shadow p-4 flex items-center justify-between"
+                                                className="bg-white rounded shadow p-4 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4"
                                             >
-                                                <div className="flex items-center space-x-4">
+                                                {/* Imagen */}
+                                                <div className="flex-shrink-0">
                                                     <img
                                                         src={product.imagen}
                                                         alt={product.nombre}
                                                         className="w-20 h-20 object-cover rounded border"
                                                     />
-                                                    <div>
-                                                        <h3 className="font-semibold text-lg">
-                                                            {product.nombre}
-                                                        </h3>
-                                                        <p className="text-gray-600">
-                                                            ${product.precio}
-                                                        </p>
+                                                </div>
+
+                                                {/* Columna: Nombre y Categoría */}
+                                                <div className="sm:flex-1">
+                                                    <div className="font-semibold text-lg">
+                                                        Nombre: {product.nombre}
+                                                    </div>
+                                                    <div className="text-gray-900">
+                                                        Categoría:{" "}
+                                                        {product.categoria}
                                                     </div>
                                                 </div>
-                                                <div className="flex gap-2 space-x-2">
+
+                                                {/* Columna: Precio y Stock */}
+                                                <div className="sm:flex-1">
+                                                    <div className="text-gray-600">
+                                                        Precio:{" "}
+                                                        <span className="numeros font-bold">
+                                                            $ {product.precio}
+                                                        </span>
+                                                    </div>
+                                                    <div className="text-gray-400">
+                                                        Stock:{" "}
+                                                        <span className="numeros">
+                                                            {product.stock}
+                                                        </span>
+                                                    </div>
+                                                </div>
+
+                                                {/* Botones */}
+                                                <div className="flex gap-2 justify-end sm:justify-start">
                                                     <button
-                                                        className="editButton bg-yellow-400 text-white px-3 py-1 rounded hover:bg-yellow-500"
+                                                        className="bg-yellow-400 text-white px-3 py-1 rounded hover:bg-yellow-500"
                                                         onClick={() =>
                                                             handleEditarProducto(
                                                                 product,
@@ -256,7 +315,6 @@ const Admin = () => {
                                                     >
                                                         Editar
                                                     </button>
-
                                                     <button
                                                         onClick={() =>
                                                             eliminarProducto(

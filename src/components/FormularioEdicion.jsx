@@ -45,29 +45,38 @@ const FormularioEdicion = forwardRef(({ productoSeleccionado }, ref) => {
     }));
 
     return (
-        <div>
-            <h2>Editar Producto</h2>
-            <div>
-                <label>ID:</label>
+        <div className="max-w-xl mx-auto p-2 bg-white text-left">
+            <div className="mb-4">
+                <label className="block text-sm font-medium text-gray-700 mb-1">
+                    ID:
+                </label>
                 <input
                     type="number"
                     name="id"
                     value={producto.id || ""}
                     readOnly
+                    className="w-full border border-gray-300 bg-gray-100 text-gray-500 rounded px-3 py-2"
                 />
             </div>
-            <div>
-                <label>Nombre:</label>
+
+            <div className="mb-4">
+                <label className="block text-sm font-medium text-gray-700 mb-1">
+                    Nombre:
+                </label>
                 <input
                     type="text"
                     name="nombre"
                     value={producto.nombre || ""}
                     onChange={handleChange}
                     required
+                    className="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
                 />
             </div>
-            <div>
-                <label>Precio:</label>
+
+            <div className="mb-4">
+                <label className="block text-sm font-medium text-gray-700 mb-1">
+                    Precio:
+                </label>
                 <input
                     type="number"
                     name="precio"
@@ -76,10 +85,14 @@ const FormularioEdicion = forwardRef(({ productoSeleccionado }, ref) => {
                     min="0"
                     step="0.01"
                     required
+                    className="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
                 />
             </div>
-            <div>
-                <label>Stock:</label>
+
+            <div className="mb-4">
+                <label className="block text-sm font-medium text-gray-700 mb-1">
+                    Stock:
+                </label>
                 <input
                     type="number"
                     name="stock"
@@ -87,26 +100,35 @@ const FormularioEdicion = forwardRef(({ productoSeleccionado }, ref) => {
                     onChange={handleChange}
                     min="0"
                     required
+                    className="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
                 />
             </div>
-            <div>
-                <label>Imagen URL:</label>
+
+            <div className="mb-4">
+                <label className="block text-sm font-medium text-gray-700 mb-1">
+                    Imagen URL:
+                </label>
                 <input
                     type="text"
                     name="imagen"
                     value={producto.imagen || ""}
                     onChange={handleChange}
                     required
+                    className="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
                 />
             </div>
-            <div>
-                <label>Categoría:</label>
+
+            <div className="mb-6">
+                <label className="block text-sm font-medium text-gray-700 mb-1">
+                    Categoría:
+                </label>
                 <input
                     type="text"
                     name="categoria"
                     value={producto.categoria || ""}
                     onChange={handleChange}
                     required
+                    className="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
                 />
             </div>
         </div>

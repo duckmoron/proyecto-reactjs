@@ -51,23 +51,30 @@ const FormularioProducto = forwardRef((props, ref) => {
 
     return (
         <div>
-            <h2>Agregar Producto</h2>
-            <div>
-                <label>Nombre:</label>
+            <div className="mb-4">
+                <label className="block mb-1 font-medium" htmlFor="nombre">
+                    Nombre:
+                </label>
                 <input
+                    id="nombre"
                     type="text"
                     name="nombre"
                     value={producto.nombre}
                     onChange={handleChange}
                     required
+                    className="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
                 />
                 {errores.nombre && (
-                    <p style={{ color: "red" }}>{errores.nombre}</p>
+                    <p className="text-red-600 mt-1">{errores.nombre}</p>
                 )}
             </div>
-            <div>
-                <label>Precio:</label>
+
+            <div className="mb-4">
+                <label className="block mb-1 font-medium" htmlFor="precio">
+                    Precio:
+                </label>
                 <input
+                    id="precio"
                     type="number"
                     name="precio"
                     value={producto.precio}
@@ -75,49 +82,65 @@ const FormularioProducto = forwardRef((props, ref) => {
                     required
                     min="0"
                     step="0.01"
+                    className="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
                 />
                 {errores.precio && (
-                    <p style={{ color: "red" }}>{errores.precio}</p>
+                    <p className="text-red-600 mt-1">{errores.precio}</p>
                 )}
             </div>
-            <div>
-                <label>Stock:</label>
+
+            <div className="mb-4">
+                <label className="block mb-1 font-medium" htmlFor="stock">
+                    Stock:
+                </label>
                 <input
+                    id="stock"
                     type="number"
                     name="stock"
                     value={producto.stock}
                     onChange={handleChange}
                     required
                     min="0"
+                    className="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
                 />
                 {errores.stock && (
-                    <p style={{ color: "red" }}>{errores.stock}</p>
+                    <p className="text-red-600 mt-1">{errores.stock}</p>
                 )}
             </div>
-            <div>
-                <label>Imagen URL:</label>
+
+            <div className="mb-4">
+                <label className="block mb-1 font-medium" htmlFor="imagen">
+                    Imagen URL:
+                </label>
                 <input
+                    id="imagen"
                     type="text"
                     name="imagen"
                     value={producto.imagen}
                     onChange={handleChange}
                     required
+                    className="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
                 />
                 {errores.imagen && (
-                    <p style={{ color: "red" }}>{errores.imagen}</p>
+                    <p className="text-red-600 mt-1">{errores.imagen}</p>
                 )}
             </div>
-            <div>
-                <label>Categoría:</label>
+
+            <div className="mb-4">
+                <label className="block mb-1 font-medium" htmlFor="categoria">
+                    Categoría:
+                </label>
                 <input
+                    id="categoria"
                     type="text"
                     name="categoria"
                     value={producto.categoria}
                     onChange={handleChange}
                     required
+                    className="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
                 />
                 {errores.categoria && (
-                    <p style={{ color: "red" }}>{errores.categoria}</p>
+                    <p className="text-red-600 mt-1">{errores.categoria}</p>
                 )}
             </div>
         </div>
