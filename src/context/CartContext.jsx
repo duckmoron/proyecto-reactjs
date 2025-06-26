@@ -8,7 +8,6 @@ export const CartProvider = ({ children }) => {
     const [productos, setProductos] = useState([])
     const [cargando, setCargando] = useState(true)
     const [error, setError] = useState(false)
-    const [isAuthenticated, setIsAuth] = useState(false)
     const apiUrl = 'https://6850bd40e7c42cfd17997288.mockapi.io/product'
     const [busqueda, setBusqueda]= useState("")
 
@@ -136,6 +135,10 @@ export const CartProvider = ({ children }) => {
         }
     };
 
+    const clearCart = () => {
+        setCart([]);
+    }
+
 
     return (
         <CartContext.Provider
@@ -148,8 +151,7 @@ export const CartProvider = ({ children }) => {
                 handleDeleteFromCart,
                 updateQuantity,
                 removeFromCart,
-                isAuthenticated,
-                setIsAuth,
+                clearCart,
                 productosFiltrados,
                 busqueda,
                 setBusqueda

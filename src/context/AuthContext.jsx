@@ -1,25 +1,31 @@
 import { createContext, useContext, useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { CartContext } from './CartContext';
+
 const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [errors, setErrors] = useState({});
-  const navigate = useNavigate();
-  const { setIsAuth } = useContext(CartContext)
+  const [role, setRole] = useState(null);
 
-  useEffect(()=>{
-    const isAuthenticated = localStorage.getItem('isAuth') === 'true'
-    if(isAuthenticated){
-      setIsAuth(true)
-      navigate('/admin')
+  const navigate = useNavigate();
+
+  // Verificar estado inicial de login
+  useEffect(() => {
+    const isAuth = localStorage.getItem('isAuth') === 'true';
+    const storedRole = localStorage.getItem('role');
+
+    if (isAuth) {
+      setIsAuthenticated(true);
+      setRole(storedRole || null);
     }
-  },[])
-  
+  }, []);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
+
     let validationErrors = {};
     if (!email) validationErrors.email = 'Email es requerido';
     if (!password) validationErrors.password = 'Password es requerido';
@@ -38,13 +44,15 @@ export const AuthProvider = ({ children }) => {
       );
 
       if (!foundUser) {
-        setErrors({ email: 'credenciales invalidas' });
+        setErrors({ email: 'Credenciales inválidas' });
       } else {
-        console.log('User role:', foundUser.role);
-        
+        setIsAuthenticated(true);
+        setRole(foundUser.role);
+        localStorage.setItem('isAuth', 'true');
+        localStorage.setItem('role', foundUser.role);
+
+        // Redirigir según el rol
         if (foundUser.role === 'admin') {
-          setIsAuth(true);
-          localStorage.setItem('isAuth', true)
           navigate('/admin');
         } else {
           navigate('/');
@@ -52,13 +60,32 @@ export const AuthProvider = ({ children }) => {
       }
     } catch (err) {
       console.error('Error fetching users:', err);
-      setErrors({ email: 'Algo salió mal. Por favor, inténtalo de nuevo más tarde.' });
+      setErrors({ email: 'Algo salió mal. Por favor, intenta más tarde.' });
     }
   };
- 
+
+  const logout = () => {
+    setIsAuthenticated(false);
+    setRole(null);
+    localStorage.removeItem('isAuth');
+    localStorage.removeItem('role');
+    navigate('/');
+  };
 
   return (
-    <AuthContext.Provider value={{email, setEmail,password, setPassword, handleSubmit,errors}}>
+    <AuthContext.Provider
+      value={{
+        isAuthenticated,
+        role,
+        email,
+        setEmail,
+        password,
+        setPassword,
+        handleSubmit,
+        errors,
+        logout
+      }}
+    >
       {children}
     </AuthContext.Provider>
   );

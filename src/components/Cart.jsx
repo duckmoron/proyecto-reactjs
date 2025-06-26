@@ -1,5 +1,6 @@
 import React, { useContext, useEffect } from "react";
 import { CartContext } from "../context/CartContext";
+import { useNavigate } from "react-router-dom";
 
 const CartItem = ({ item }) => {
     const { updateQuantity, removeFromCart } = useContext(CartContext);
@@ -44,6 +45,8 @@ const CartItem = ({ item }) => {
 
 const Cart = ({ isOpen, onClose }) => {
     const { cart } = useContext(CartContext);
+
+    const navigate = useNavigate();
 
     // Cerrar con la tecla ESC
     useEffect(() => {
@@ -126,7 +129,13 @@ const Cart = ({ isOpen, onClose }) => {
                                 )}
                             </span>
                         </p>
-                        <button className="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700 transition">
+                        <button
+                            onClick={() => {
+                                onClose();
+                                navigate("/checkout");
+                            }}
+                            className="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700 transition"
+                        >
                             Finalizar compra
                         </button>
                     </div>

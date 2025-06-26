@@ -4,6 +4,8 @@ import Cart from "../Cart";
 import logo from '../../assets/logo.png';
 
 import { CartContext } from "../../context/CartContext";
+import { useAuth } from "../../context/AuthContext";
+import { useNavigate } from "react-router-dom";
 
 // Enlaces del menú
 const MenuLinks = ({ isMobile = false, onLinkClick }) => {
@@ -20,10 +22,12 @@ const MenuLinks = ({ isMobile = false, onLinkClick }) => {
   );
 };
 
-// Íconos (carrito, login, admin)
+// Íconos (carrito, login/logout, admin)
 const HeaderIcons = ({ iconClass, setCartOpen }) => {
   const { cart } = useContext(CartContext);
+  const { isAuthenticated, logout } = useAuth();
   const [animate, setAnimate] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (cart.length === 0) return;
@@ -33,21 +37,49 @@ const HeaderIcons = ({ iconClass, setCartOpen }) => {
   }, [cart.length]);
 
   return (
-    <div className="flex items-center space-x-4">
-      <NavLink to="/login" className="transition">
-        <i className={`fa-solid fa-right-to-bracket ${iconClass}`}></i>
-      </NavLink>
-      <NavLink to="/admin" className="transition">
-        <i className={`fa-solid fa-user-tie ${iconClass}`}></i>
-      </NavLink>
+    <div className="flex items-center space-x-2.5">
+      {/* Login / Logout */}
+      <div>
+        {!isAuthenticated ? (
+          <button
+            onClick={() => navigate("/login")}
+            className="transition flex items-center justify-center bg-transparent border-none p-0"
+            title="Login"
+          >
+            <i className={`fa-solid fa-right-to-bracket ${iconClass}`}></i>
+          </button>
+        ) : (
+          <button
+            onClick={logout}
+            className="transition flex items-center justify-center bg-transparent border-none p-0"
+            title="Logout"
+          >
+            <i className={`fa-solid fa-right-from-bracket ${iconClass}`}></i>
+          </button>
+        )}
+      </div>
+
+      {/* Admin */}
+      <div>
+        <button
+          onClick={() => navigate("/admin")}
+          className="transition flex items-center justify-center bg-transparent border-none p-0"
+          title="Admin"
+        >
+          <i className={`fa-solid fa-user-tie ${iconClass}`}></i>
+        </button>
+      </div>
+
+      {/* Carrito */}
       <div
         onClick={() => setCartOpen(true)}
         className="relative transition cursor-pointer"
+        title="Carrito"
       >
         {cart.length > 0 && (
           <span
             className={`absolute -top-2 -right-2 bg-red-600 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center transition-transform duration-300 ${
-              animate ? 'scale-125' : 'scale-100'
+              animate ? "scale-125" : "scale-100"
             }`}
           >
             {cart.length}
@@ -55,11 +87,10 @@ const HeaderIcons = ({ iconClass, setCartOpen }) => {
         )}
         <i className={`fa-solid fa-cart-shopping ${iconClass}`}></i>
       </div>
-
-      
     </div>
   );
 };
+
 
 const Header = () => {
   const [isCartOpen, setCartOpen] = useState(false);
