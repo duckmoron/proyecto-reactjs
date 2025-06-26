@@ -1,32 +1,37 @@
 import { createContext, useState, useEffect } from "react";
+import { useLocation } from "react-router-dom";
 import { toast } from "react-toastify";
 
-export const CartContext = createContext()
+export const CartContext = createContext();
 
 export const CartProvider = ({ children }) => {
-    const [cart, setCart] = useState([])
-    const [productos, setProductos] = useState([])
-    const [cargando, setCargando] = useState(true)
-    const [error, setError] = useState(false)
-    const apiUrl = 'https://6850bd40e7c42cfd17997288.mockapi.io/product'
-    const [busqueda, setBusqueda]= useState("")
+    const [cart, setCart] = useState([]);
+    const [productos, setProductos] = useState([]);
+    const [cargando, setCargando] = useState(true);
+    const [error, setError] = useState(false);
+    const [busqueda, setBusqueda] = useState("");
+    const location = useLocation(); // ✅ Hook para detectar navegación
+    const apiUrl = "https://6850bd40e7c42cfd17997288.mockapi.io/product";
 
+    // Esta función reutilizable carga los productos desde la API
+    const fetchProductos = async () => {
+        try {
+            setCargando(true);
+            const respuesta = await fetch(apiUrl);
+            const datos = await respuesta.json();
+            setProductos(datos);
+            setCargando(false);
+        } catch (error) {
+            console.error("Error al cargar productos", error);
+            setError(true);
+            setCargando(false);
+        }
+    };
+
+    // Cargar al montar y cada vez que cambia la ruta
     useEffect(() => {
-        fetch(apiUrl)
-            .then(respuesta => respuesta.json())
-            .then(datos => {
-                setTimeout(() => {
-                    setProductos(datos)
-                    setCargando(false)
-                }, 2000)
-            })
-            .catch(error => {
-                console.log('Error', error)
-                setCargando(false)
-                setError(true)
-            })
-
-    }, [])
+        fetchProductos();
+    }, [location.pathname]);
 
     if (error) {
         return (
@@ -37,8 +42,9 @@ export const CartProvider = ({ children }) => {
         );
     }
 
-    const productosFiltrados = productos.filter((producto)=> producto?.nombre.toLowerCase().includes(busqueda.toLowerCase()))
-
+    const productosFiltrados = productos.filter((producto) =>
+        producto?.nombre.toLowerCase().includes(busqueda.toLowerCase())
+    );
 
     const handleAddToCart = (product) => {
         const productInCart = cart.find((item) => item.id === product.id);
@@ -48,24 +54,28 @@ export const CartProvider = ({ children }) => {
                     item.id === product.id
                         ? { ...item, cantidad: product.cantidad }
                         : item
-                ),
+                )
             );
         } else {
             toast.success(
-            <div className="flex items-center gap-3">
-                <img
-                src={product.imagen}
-                alt={product.nombre}
-                className="w-10 h-10 object-cover rounded"
-                />
-                <span>
-                El producto <strong>{product.nombre}</strong> se ha agregado al carrito.
-                </span>
-            </div>, {
-                className: 'bg-green-100 text-green-900 border border-green-400 rounded-md shadow-md',
-                bodyClassName: 'text-sm',
-                position: "top-center"
-            });
+                <div className="flex items-center gap-3">
+                    <img
+                        src={product.imagen}
+                        alt={product.nombre}
+                        className="w-10 h-10 object-cover rounded"
+                    />
+                    <span>
+                        El producto <strong>{product.nombre}</strong> se ha
+                        agregado al carrito.
+                    </span>
+                </div>,
+                {
+                    className:
+                        "bg-green-100 text-green-900 border border-green-400 rounded-md shadow-md",
+                    bodyClassName: "text-sm",
+                    position: "top-center",
+                }
+            );
             setCart([...cart, { ...product, cantidad: product.cantidad }]);
         }
     };
@@ -74,32 +84,33 @@ export const CartProvider = ({ children }) => {
         toast.error(
             <div className="flex items-center gap-3">
                 <img
-                src={product.imagen}
-                alt={product.nombre}
-                className="w-10 h-10 object-cover rounded"
+                    src={product.imagen}
+                    alt={product.nombre}
+                    className="w-10 h-10 object-cover rounded"
                 />
                 <span>
-                El producto <strong>{product.nombre}</strong> se ha eliminado al carrito.
+                    El producto <strong>{product.nombre}</strong> se ha
+                    eliminado del carrito.
                 </span>
-            </div>,  {
-            className: 'bg-red-100 text-red-900 border border-red-400 rounded-md shadow-md',
-            bodyClassName: 'text-sm',
-            position: "top-center"
-        });
-        setCart((prevCart) => {
-            return prevCart.map((item) => {
-                if (item.id === product.id) {
-                    if (item.cantidad > 1) {
-                        return { ...item, cantidad: item.cantidad - 1 };
-                    } else {
-                        return null; // Si quantity es 1, marcamos para eliminar
-                    }
-                } else {
-                    return item; // Si no es el producto, lo dejamos igual
-                }
-            }).filter((item) => item !== null); // Quitamos los productos nulos
-        });
-        
+            </div>,
+            {
+                className:
+                    "bg-red-100 text-red-900 border border-red-400 rounded-md shadow-md",
+                bodyClassName: "text-sm",
+                position: "top-center",
+            }
+        );
+        setCart((prevCart) =>
+            prevCart
+                .map((item) =>
+                    item.id === product.id
+                        ? item.cantidad > 1
+                            ? { ...item, cantidad: item.cantidad - 1 }
+                            : null
+                        : item
+                )
+                .filter((item) => item !== null)
+        );
     };
 
     const updateQuantity = (id, nuevaCantidad) => {
@@ -123,13 +134,15 @@ export const CartProvider = ({ children }) => {
                         className="w-10 h-10 object-cover rounded"
                     />
                     <span>
-                        Se eliminó <strong>{producto.nombre}</strong> del carrito.
+                        Se eliminó <strong>{producto.nombre}</strong> del
+                        carrito.
                     </span>
                 </div>,
                 {
-                    className: 'bg-red-100 text-red-900 border border-red-400 rounded-md shadow-md',
-                    bodyClassName: 'text-sm',
-                    position: "top-center"
+                    className:
+                        "bg-red-100 text-red-900 border border-red-400 rounded-md shadow-md",
+                    bodyClassName: "text-sm",
+                    position: "top-center",
                 }
             );
         }
@@ -137,8 +150,7 @@ export const CartProvider = ({ children }) => {
 
     const clearCart = () => {
         setCart([]);
-    }
-
+    };
 
     return (
         <CartContext.Provider
@@ -154,7 +166,7 @@ export const CartProvider = ({ children }) => {
                 clearCart,
                 productosFiltrados,
                 busqueda,
-                setBusqueda
+                setBusqueda,
             }}
         >
             {children}

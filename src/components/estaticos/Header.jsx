@@ -25,7 +25,7 @@ const MenuLinks = ({ isMobile = false, onLinkClick }) => {
 // Íconos (carrito, login/logout, admin)
 const HeaderIcons = ({ iconClass, setCartOpen }) => {
   const { cart } = useContext(CartContext);
-  const { isAuthenticated, logout } = useAuth();
+  const { isAuthenticated, role, logout } = useAuth();
   const [animate, setAnimate] = useState(false);
   const navigate = useNavigate();
 
@@ -60,15 +60,17 @@ const HeaderIcons = ({ iconClass, setCartOpen }) => {
       </div>
 
       {/* Admin */}
-      <div>
-        <button
-          onClick={() => navigate("/admin")}
-          className="transition flex items-center justify-center bg-transparent border-none p-0"
-          title="Admin"
-        >
-          <i className={`fa-solid fa-user-tie ${iconClass}`}></i>
-        </button>
-      </div>
+      {isAuthenticated && role === "admin" && (
+        <div>
+          <button
+            onClick={() => navigate("/admin")}
+            className="transition flex items-center justify-center bg-transparent border-none p-0"
+            title="Admin"
+          >
+            <i className={`fa-solid fa-user-tie ${iconClass}`}></i>
+          </button>
+        </div>
+      )}
 
       {/* Carrito */}
       <div

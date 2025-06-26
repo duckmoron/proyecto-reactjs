@@ -35,7 +35,11 @@ function App() {
 
           <Route path='/contacto' element={<Contacto />} />
 
-          <Route path='/admin' element={<RutaProtegida isAuthenticated={isAuthenticated}> <Admin /> </RutaProtegida>} />
+          <Route path='/admin' element={
+            <RutaProtegida isAuthenticated={isAuthenticated} requireRole="admin">
+              <Admin />
+            </RutaProtegida>
+          } />
 
           <Route path='/login' element={<Login />} />
 

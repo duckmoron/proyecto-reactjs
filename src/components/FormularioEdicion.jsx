@@ -1,30 +1,58 @@
-import React, { useState, useEffect } from 'react';
+import React, {
+    forwardRef,
+    useEffect,
+    useImperativeHandle,
+    useState,
+} from "react";
 
-function FormularioEdicion({ productoSeleccionado, onActualizar }) {
+const FormularioEdicion = forwardRef(({ productoSeleccionado }, ref) => {
     const [producto, setProducto] = useState(productoSeleccionado);
 
-    useEffect(()=>{
-        setProducto(productoSeleccionado)
-    },[productoSeleccionado])
+    useEffect(() => {
+        setProducto(productoSeleccionado);
+    }, [productoSeleccionado]);
 
     const handleChange = (e) => {
         const { name, value } = e.target;
-        setProducto({ ...producto, [name]: value });
-
+        setProducto((prev) => ({ ...prev, [name]: value }));
     };
+
+    // Validación más completa
+    const validarFormulario = () => {
+        if (
+            !producto.nombre?.trim() ||
+            producto.precio === "" ||
+            Number(producto.precio) < 0 ||
+            producto.stock === "" ||
+            Number(producto.stock) < 0 ||
+            !producto.imagen?.trim() ||
+            !producto.categoria?.trim() ||
+            producto.categoria.length < 5
+        ) {
+            return false;
+        }
+        return true;
+    };
+
+    // Exponer funciones al padre (Admin)
+    useImperativeHandle(ref, () => ({
+        getProducto: () => ({
+            ...producto,
+            precio: Number(producto.precio),
+            stock: Number(producto.stock),
+        }),
+        validar: () => validarFormulario(),
+    }));
+
     return (
-        <form onSubmit={(e)=>{
-            e.preventDefault()
-            onActualizar(producto)
-        }}>
+        <div>
             <h2>Editar Producto</h2>
             <div>
                 <label>ID:</label>
                 <input
                     type="number"
                     name="id"
-                    value={producto.id || ''}
-                    onChange={handleChange}
+                    value={producto.id || ""}
                     readOnly
                 />
             </div>
@@ -33,7 +61,7 @@ function FormularioEdicion({ productoSeleccionado, onActualizar }) {
                 <input
                     type="text"
                     name="nombre"
-                    value={producto.nombre || ''}
+                    value={producto.nombre || ""}
                     onChange={handleChange}
                     required
                 />
@@ -43,19 +71,21 @@ function FormularioEdicion({ productoSeleccionado, onActualizar }) {
                 <input
                     type="number"
                     name="precio"
-                    value={producto.precio || ''}
+                    value={producto.precio || ""}
                     onChange={handleChange}
-                    required
                     min="0"
+                    step="0.01"
+                    required
                 />
             </div>
             <div>
-                <label>stock:</label>
+                <label>Stock:</label>
                 <input
                     type="number"
                     name="stock"
-                    value={producto.stock || ''}
+                    value={producto.stock || ""}
                     onChange={handleChange}
+                    min="0"
                     required
                 />
             </div>
@@ -64,23 +94,23 @@ function FormularioEdicion({ productoSeleccionado, onActualizar }) {
                 <input
                     type="text"
                     name="imagen"
-                    value={producto.imagen || ''}
+                    value={producto.imagen || ""}
                     onChange={handleChange}
                     required
                 />
             </div>
             <div>
-                <label>Categoria:</label>
+                <label>Categoría:</label>
                 <input
                     type="text"
                     name="categoria"
-                    value={producto.categoria || ''}
+                    value={producto.categoria || ""}
                     onChange={handleChange}
                     required
                 />
             </div>
-            <button type="submit">Actualizar Producto</button>
-        </form>
+        </div>
     );
-}
+});
+
 export default FormularioEdicion;
