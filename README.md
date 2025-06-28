@@ -1,12 +1,93 @@
-# React + Vite
+# 🦆 Duck-Commercio
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+_E-commerce moderno desarrollado con **ReactJS + Vite**, utilizando **TailwindCSS**, **React Router**, **Bootstrap**, animaciones con **Framer Motion** y más._
 
-Currently, two official plugins are available:
+## 🚀 Tecnologías principales
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- ⚛️ **React 19** – UI moderna y dinámica
+- ⚡ **Vite** – Bundler ultrarrápido
+- 🎨 **TailwindCSS 4** – Estilos utilitarios
+- 🎬 **Framer Motion** – Animaciones fluidas
+- 🍞 **React Toastify** – Notificaciones rápidas
+- 🧭 **React Router DOM v7** – Enrutamiento SPA
+- 💅 **Bootstrap 5 + React-Bootstrap** – Componentes estilizados
+- 🍭 **SweetAlert2** – Alertas personalizadas
+- 🛠️ ESLint – Linting con buenas prácticas
+- 🌐 **TypeScript-ready** 
 
-## Expanding the ESLint configuration
+---
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## 📦 Instalación
+
+```bash
+# Clona el repositorio
+git clone https://github.com/duckmoron/proyecto-reactjs.git
+cd proyecto-reactjs
+
+# Instala las dependencias
+npm install
+```
+
+## 🧪 Scripts disponibles
+
+```bash
+npm run dev       # Servidor de desarrollo
+npm run build     # Compila para producción
+npm run preview   # Previsualiza la build
+npm run lint      # Ejecuta ESLint
+```
+
+---
+
+## 🗂️ Estructura base del proyecto
+
+```bash
+proyecto-reactjs/
+├── public/                  # Archivos públicos
+├── src/
+│   ├── assets/              # Imágenes
+│   ├── auth/                # RutasProtegidas
+│   ├── components/          # Componentes reutilizables
+│   ├── context/             # Admin, Auth, Cart
+│   ├── pages/               # Páginas de rutas
+│   ├── routes/              # Configuración de React Router
+│   ├── utils/               # Sweetalert2
+│   ├── App.jsx              # Root del componente principal
+│   └── main.jsx             # Punto de entrada con ReactDOM
+├── .eslintrc.cjs            # Configuración de ESLint
+├── vite.config.js           # Configuración de Vite
+└── package.json
+```
+
+---
+
+## ✨ Características
+
+- Responsive y optimizado para móviles
+- Tipografías personalizadas: **Inter** y **Domine**
+- Carruseles con `react-slick` y `slick-carousel`
+- Meta tags dinámicos con `react-helmet`
+- Sistema de alertas y notificaciones
+- Ruteo SPA con `react-router-dom`
+- Pronto: integración con back-end y pagos 🛒
+
+---
+
+## 🧑‍💻 Autor
+
+**Patricio Morón**  
+[GitHub @duckmoron](https://github.com/duckmoron)  
+> Proyecto en desarrollo abierto a mejoras y sugerencias.
+
+---
+
+## 📝 Licencia
+
+Este proyecto está bajo licencia MIT.  
+Podés usarlo, modificarlo y distribuirlo libremente.
+
+---
+
+## 🌐 Demo en vivo
+
+[🔗 Ver sitio en producción](https://carrito-reactjs.netlify.app/)
