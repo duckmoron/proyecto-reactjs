@@ -28,6 +28,26 @@ cd proyecto-reactjs
 npm install
 ```
 
+## 🙍‍♂️ Usuarios de prueba
+
+```bash
+[
+    {
+        "email": "admin@example.com",
+        "password": "admin123",
+        "role": "admin"
+    },
+    {
+        "email": "client@example.com",
+        "password": "cliente123",
+        "role": "cliente"
+    }
+]
+```
+
+---
+
+
 ## 🧪 Scripts disponibles
 
 ```bash
