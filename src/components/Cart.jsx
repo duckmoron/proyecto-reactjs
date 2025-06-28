@@ -126,7 +126,7 @@ const Cart = ({ isOpen, onClose }) => {
                                 {cart.reduce(
                                     (total, item) => total + item.precio * item.cantidad,
                                     0
-                                )}
+                                ).toFixed(2)}
                             </span>
                         </p>
                         <button

@@ -1,4 +1,5 @@
 import React, { useContext } from "react";
+import { Helmet } from "react-helmet";
 import Header from "../components/estaticos/Header";
 import Footer from "../components/estaticos/Footer";
 import ProductList from "../components/ProductList";
@@ -11,6 +12,13 @@ const GaleriaDeProductos = () => {
 
   return (
     <>
+    <Helmet>
+        <title>Productos | Duck-Commercio</title>
+        <meta
+          name="description"
+          content="Bienvenido a la página de productos de nuestro sitio."
+        />
+      </Helmet>
       <Header />
         <div className="container pt-20">
           <main className="min-h-screen bg-white text-gray-800 px-4 md:px-8 lg:px-20 py-10">

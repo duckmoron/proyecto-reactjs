@@ -1,82 +1,90 @@
-import { useAuth } from '../context/AuthContext';
+import React, { } from "react";
+import { useAuth } from "../context/AuthContext";
+import logo from "../assets/logo.png";
+import { Helmet } from "react-helmet";
 
 const Login = () => {
-
-  const {email, setEmail,password, setPassword, handleSubmit ,errors} = useAuth()
+  const { email, setEmail, password, setPassword, handleSubmit, errors } =
+    useAuth();
 
   return (
-    <form
-      onSubmit={handleSubmit}
-      style={{
-        display: 'flex',
-        flexDirection: 'column',
-        gap: '1rem',
-        maxWidth: '400px',
-        margin: 'auto',
-      }}
-    >
-      <div style={{ display: 'flex', flexDirection: 'column' }}>
-        <label htmlFor="formBasicEmail" style={{ marginBottom: '0.5rem', fontWeight: 'bold' }}>
-          Email address
-        </label>
-        <input
-          id="formBasicEmail"
-          type="email"
-          placeholder="Enter email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          style={{
-            padding: '0.5rem',
-            border: `1px solid ${errors.email ? 'red' : '#ced4da'}`,
-            borderRadius: '0.25rem',
-          }}
+    <>
+      <Helmet>
+        <title>Login | Duck-Commercio</title>
+        <meta
+          name="description"
+          content="Página de login de nuestro sitio."
         />
-        {errors.email && (
-          <div style={{ color: 'red', fontSize: '0.875rem', marginTop: '0.25rem' }}>
-            {errors.email}
+      </Helmet>
+      <div className="flex items-center justify-center min-h-screen bg-gray-100 px-4">
+        <form
+          onSubmit={handleSubmit}
+          className="bg-white p-8 rounded-lg shadow-md w-full max-w-md space-y-6"
+        >
+          {/* Logo centrado */}
+          <div className="flex justify-center">
+            <img src={logo} alt="Logo" className="h-16 w-auto" />
           </div>
-        )}
-      </div>
 
-      <div style={{ display: 'flex', flexDirection: 'column' }}>
-        <label htmlFor="formBasicPassword" style={{ marginBottom: '0.5rem', fontWeight: 'bold' }}>
-          Password
-        </label>
-        <input
-          id="formBasicPassword"
-          type="password"
-          placeholder="Password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          style={{
-            padding: '0.5rem',
-            border: `1px solid ${errors.password ? 'red' : '#ced4da'}`,
-            borderRadius: '0.25rem',
-          }}
-        />
-        {errors.password && (
-          <div style={{ color: 'red', fontSize: '0.875rem', marginTop: '0.25rem' }}>
-            {errors.password}
+          <h2 className="text-center mb-4">Iniciar sesión</h2>
+
+          {/* Email */}
+          <div className="flex flex-col">
+            <label
+              htmlFor="formBasicEmail"
+              className="mb-1 font-medium text-gray-700"
+            >
+              Dirección de correo
+            </label>
+            <input
+              id="formBasicEmail"
+              type="email"
+              placeholder="ejemplo@correo.com"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              className={`p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 ${
+                errors.email ? "border-red-500" : "border-gray-300"
+              }`}
+            />
+            {errors.email && (
+              <p className="text-red-500 text-sm mt-1">{errors.email}</p>
+            )}
           </div>
-        )}
-      </div>
 
-      <button
-        type="submit"
-        style={{
-          backgroundColor: '#007bff',
-          color: 'white',
-          padding: '0.75rem',
-          border: 'none',
-          borderRadius: '0.25rem',
-          cursor: 'pointer',
-          fontSize: '1rem',
-        }}
-      >
-        Iniciar sesión
-      </button>
-    </form>
+          {/* Password */}
+          <div className="flex flex-col">
+            <label
+              htmlFor="formBasicPassword"
+              className="mb-1 font-medium text-gray-700"
+            >
+              Contraseña
+            </label>
+            <input
+              id="formBasicPassword"
+              type="password"
+              placeholder="********"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              className={`p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 ${
+                errors.password ? "border-red-500" : "border-gray-300"
+              }`}
+            />
+            {errors.password && (
+              <p className="text-red-500 text-sm mt-1">{errors.password}</p>
+            )}
+          </div>
+
+          {/* Botón */}
+          <button
+            type="submit"
+            className="w-full bg-blue-600 text-white py-2 !rounded-md hover:bg-blue-700 transition"
+          >
+            Iniciar sesión
+          </button>
+        </form>
+      </div>
+    </>
   );
-}
+};
 
-export default Login
+export default Login;

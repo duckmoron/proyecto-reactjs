@@ -1,4 +1,5 @@
 import React, { useContext } from "react";
+import { Helmet } from "react-helmet";
 import Header from "../components/estaticos/Header";
 import Footer from "../components/estaticos/Footer";
 import loading from "../assets/loading.gif";
@@ -11,6 +12,13 @@ const Home = () => {
 
   return (
     <>
+      <Helmet>
+        <title>Inicio | Duck-Commercio</title>
+        <meta
+          name="description"
+          content="Bienvenido a la página principal de nuestro sitio."
+        />
+      </Helmet>
       <Header />
 
       {/* Hero principal */}
@@ -23,7 +31,8 @@ const Home = () => {
             </h1>
             <p className="text-lg mb-6">
               Especialistas en{" "}
-              <strong>gigantografías, pósters y stickers personalizados
+              <strong>
+                gigantografías, pósters y stickers personalizados
               </strong>. Creatividad impresa para tus espacios, marcas y
               emociones.
             </p>
@@ -47,7 +56,7 @@ const Home = () => {
       {/* Contenido dinámico (productos o loader) */}
       <section
         id="productos"
-        className="bg-white text-gray-800 px-4 md:px-8 lg:px-20 py-14"
+        className="bg-gray-100 text-gray-800 px-4 md:px-8 lg:px-20 py-14"
       >
         {cargando
           ? (
@@ -57,7 +66,7 @@ const Home = () => {
           )
           : (
             <>
-              <h2 className="text-center text-3xl font-bold mb-8 text-indigo-700">
+              <h2 className="text-center">
                 Últimos Productos
               </h2>
               <HomeSlider />
@@ -66,7 +75,7 @@ const Home = () => {
       </section>
 
       {/* Call-to-action extra o categoría */}
-      <section className="bg-gray-100 px-4 md:px-8 lg:px-20 py-14">
+      <section className="px-4 md:px-8 lg:px-20 py-14">
         <div className="text-center">
           <h3 className="text-2xl md:text-3xl font-semibold mb-4">
             ¿Buscás algo personalizado?
@@ -85,10 +94,10 @@ const Home = () => {
       </section>
       {/* Testimonios */}
       <section className="bg-indigo-50 px-4 md:px-8 lg:px-20 py-14">
-        <h2 className="text-3xl font-bold text-center text-indigo-700 mb-12">
+        <h2 className="text-center">
           Lo que dicen nuestros clientes
         </h2>
-        <div className="grid gap-8 md:grid-cols-3">
+        <div className="grid gap-8 md:grid-cols-3 m-10">
           {/* Testimonio 1 */}
           <div className="bg-white p-6 rounded-lg shadow-md text-center">
             <p className="text-gray-700 italic mb-4">
